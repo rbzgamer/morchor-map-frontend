@@ -3,23 +3,30 @@ import "leaflet/dist/leaflet.css";
 import "./App.css";
 
 import Map from "./Components/map/Map";
+import { useState } from "react";
+import SearchBox from "./Components/map/SearchBox";
 
 function App() {
-  return <>
-  {/* <div className="formBlock">
-    <form id="form">
-      <input type="text" name="start" className="input" id="start" placeholder="Choose starting point"></input>
-      <input type="text" name="end" className="input" id="destination" placeholder="Choose destination point"></input>
-      <button type="submit">Get destination</button>
-    </form>
+  const [selectPosition, setSelectPosition] = useState(null);
 
-  </div> */}
-
-    <div className = "container">
-      <Map/>
+  return (
+    <div
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
+      <div style={{ width: "100vw", height: "100%" }}>
+        <Map selectPosition={selectPosition} />
+      </div>
+      <SearchBox
+        selectPosition={selectPosition}
+        setSelectPosition={setSelectPosition}
+      />
     </div>
-    
-  </>
+  );
 }
 
 export default App;
