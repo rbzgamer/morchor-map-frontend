@@ -8,4 +8,8 @@ export class AdminService {
   constructor(
     @InjectModel('Admin') private readonly adminModel: Model<Admin>,
   ) {}
+
+  getAdminTest(): string {
+    return 'Hello Admin!';
+  }
 }

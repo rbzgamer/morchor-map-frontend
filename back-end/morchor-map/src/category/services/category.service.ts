@@ -8,4 +8,8 @@ export class CategoryService {
   constructor(
     @InjectModel('Category') private readonly categoryModel: Model<Category>,
   ) {}
+
+  getCategoryTest(): string {
+    return 'Hello Category!';
+  }
 }
