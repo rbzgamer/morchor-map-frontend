@@ -8,4 +8,8 @@ export class AddressService {
   constructor(
     @InjectModel('Address') private readonly addressModel: Model<Address>,
   ) {}
+
+  getAddressTest(): string {
+    return 'Hello Address!';
+  }
 }

@@ -8,4 +8,8 @@ export class UsersService {
   constructor(
     @InjectModel('Users') private readonly usersModel: Model<Users>,
   ) {}
+
+  getUsersTest(): string {
+    return 'Hello Users!';
+  }
 }
