@@ -5,7 +5,7 @@ import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
 import L from "leaflet";
 import { useEffect, useState } from "react";
 import "https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js";
-import Routing from "./Routing";
+import Routing from "../functions/Routing";
 
 const icon = L.icon({
   iconUrl: "../../img/location-pin.png",
@@ -72,14 +72,11 @@ const render = (latitude, longitude) => {
       </Marker>
 
       //get routing
-      <Routing/>
+      {/* <Routing/> */}
     </MapContainer>
   );
 };
 
-// useEffect(() => {
-//   render()
-// })
 
 const Map = (props) => {
   const [latitude, setLatitude] = useState();
