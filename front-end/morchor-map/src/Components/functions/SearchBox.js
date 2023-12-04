@@ -23,46 +23,49 @@ export default function SearchBox(props) {
   return (
     <>
       <div className="formBlock">
+        Morchor Map
         <form id="form">
-          <input
-            type="text"
-            className="input"
-            id="start"
-            placeholder="Search..."
-            value={searchText}
-            onChange={(event) => {
-              setSearchText(event.target.value);
-            }}
-          />
-          <Button
-            variant="contained"
-            color="primary"
-            style={{ top: "10px" }}
-            onClick={() => {
-              // Search
-              const params = {
-                q: searchText,
-                format: "json",
-                addressdetails: 1,
-                polygon_geojson: 0,
-              };
-              const queryString = new URLSearchParams(params).toString();
-              const requestOptions = {
-                method: "GET",
-                redirect: "follow",
-              };
-              fetch(`${NOMINATIM_BASE_URL}${queryString}`, requestOptions)
-                .then((response) => response.text())
-                .then((result) => {
-                  setListPlace(JSON.parse(result));
-                })
-                .catch((err) => console.log("err: ", err));
-            }}
-          >
-            Search
-          </Button>
+          <div className="search-container">
+            <input
+              type="text"
+              className="input"
+              id="start"
+              placeholder="Search..."
+              value={searchText}
+              onChange={(event) => {
+                setSearchText(event.target.value);
+              }}
+            />
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ top: "10px" }}
+              onClick={() => {
+                // Search
+                const params = {
+                  q: searchText,
+                  format: "json",
+                  addressdetails: 1,
+                  polygon_geojson: 0,
+                };
+                const queryString = new URLSearchParams(params).toString();
+                const requestOptions = {
+                  method: "GET",
+                  redirect: "follow",
+                };
+                fetch(`${NOMINATIM_BASE_URL}${queryString}`, requestOptions)
+                  .then((response) => response.text())
+                  .then((result) => {
+                    setListPlace(JSON.parse(result));
+                  })
+                  .catch((err) => console.log("err: ", err));
+              }}
+            >
+              Search
+            </Button>
+          </div>
 
-          <div>
+          {/* <div>
             <List component="nav" aria-label="main mailbox folders">
               {listPlace.map((item) => {
                 return (
@@ -87,7 +90,7 @@ export default function SearchBox(props) {
                 );
               })}
             </List>
-          </div>
+          </div> */}
         </form>
       </div>
     </>
