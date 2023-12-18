@@ -5,29 +5,11 @@ export const LocationSchema = new mongoose.Schema({
     type: [String],
     require: true,
   },
-  categoryName: {
+  category: {
     type: String,
     require: true,
   },
   img: {
-    type: String,
-  },
-  houseNumber: {
-    type: Number,
-  },
-  villageNumber: {
-    type: Number,
-  },
-  alley: {
-    type: String,
-  },
-  subDistrict: {
-    type: String,
-  },
-  district: {
-    type: String,
-  },
-  postalCode: {
     type: String,
   },
   latitude: {
@@ -38,19 +20,17 @@ export const LocationSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
+  room: {
+    type: [String],
+  },
 });
 
 export interface Location {
   id: string;
   locationName: string[];
-  categoryName: string;
+  category: string;
   img: string;
-  houseNumber: number;
-  villageNumber: number;
-  alley: string;
-  subDistrict: string;
-  district: string;
-  postalCode: string;
   latitude: string;
   longtitude: string;
+  room: string[];
 }
