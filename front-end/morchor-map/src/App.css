@@ -1,8 +1,6 @@
 .application {
   display: flex;
   flex-direction: row;
-  width: 100vw;
-  height: 100vw;
 }
 
 .map {
