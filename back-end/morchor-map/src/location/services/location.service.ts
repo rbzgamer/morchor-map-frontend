@@ -55,10 +55,20 @@ export class LocationService {
     } else if (searchLocationDTO.locationName && !searchLocationDTO.category) {
       return await this.locationModel
         .find({
-          locationName: {
-            $regex: searchLocationDTO.locationName,
-            $options: 'i',
-          },
+          $or: [
+            {
+              locationName: {
+                $regex: searchLocationDTO.locationName,
+                $options: 'i',
+              },
+            },
+            {
+              room: {
+                $regex: searchLocationDTO.locationName,
+                $options: 'i',
+              },
+            },
+          ],
         })
         .sort({ category: 1 })
         .exec();
