@@ -25,7 +25,7 @@ export class LocationService {
     if (searchLocationDTO.locationName && searchLocationDTO.category) {
       return await this.locationModel
         .find({
-          $or: [
+          $and: [
             {
               locationName: {
                 $regex: searchLocationDTO.locationName,
