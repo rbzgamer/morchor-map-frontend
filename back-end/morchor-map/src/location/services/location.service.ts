@@ -9,6 +9,7 @@ import { Location } from '../model/location.model';
 import { CreateLocationDTO } from '../dto/CreateLocation.dto';
 import { UpdateLocationDTO } from '../dto/UpdateLocation.dto';
 import { AddLocationNameDTO } from '../dto/AddLocationName.dto';
+import { SearchLocationDTO } from '../dto/SearchLocation.dto';
 
 @Injectable()
 export class LocationService {
@@ -130,4 +131,6 @@ export class LocationService {
 
     return await location.save();
   }
+
+  async searchLocation(searchLocationDTO: SearchLocationDTO) {}
 }
