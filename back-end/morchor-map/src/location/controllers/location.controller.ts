@@ -25,8 +25,10 @@ export class LocationController {
   }
 
   @Get('/')
-  async getAllLocation(): Promise<Location[]> {
-    return await this.locationService.getAllLocation();
+  async searchLocaiton(
+    @Body() searchLocationDTO: SearchLocationDTO,
+  ): Promise<Location[]> {
+    return await this.locationService.getLocation(searchLocationDTO);
   }
 
   @Get('/:id')
@@ -58,10 +60,5 @@ export class LocationController {
     @Body() nameList: AddLocationNameDTO,
   ) {
     return await this.locationService.addLocationName(id, nameList);
-  }
-
-  @Get()
-  async searchLocaiton(@Body() searchLocationDTO: SearchLocationDTO) {
-    return await this.locationService.searchLocation(searchLocationDTO);
   }
 }

@@ -21,8 +21,21 @@ export class LocationService {
     return 'Hello Location!';
   }
 
-  async getAllLocation(): Promise<Location[]> {
-    return await this.locationModel.find().sort({ category: 1 }).exec();
+  async getLocation(searchLocationDTO: SearchLocationDTO): Promise<Location[]> {
+    if (searchLocationDTO.locationName && searchLocationDTO.category) {
+      return null;
+    } else if (!searchLocationDTO.locationName && searchLocationDTO.category) {
+      return await this.locationModel
+        .find({
+          category: { $regex: searchLocationDTO.category, $options: 'i' },
+        })
+        .sort({ category: 1 })
+        .exec();
+    } else if (searchLocationDTO.locationName && !searchLocationDTO.category) {
+      return null;
+    } else {
+      return await this.locationModel.find().sort({ category: 1 }).exec();
+    }
   }
 
   async getLocationById(id: string): Promise<Location> {
@@ -131,6 +144,4 @@ export class LocationService {
 
     return await location.save();
   }
-
-  async searchLocation(searchLocationDTO: SearchLocationDTO) {}
 }
