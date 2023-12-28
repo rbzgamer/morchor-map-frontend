@@ -23,16 +23,45 @@ export class LocationService {
 
   async getLocation(searchLocationDTO: SearchLocationDTO): Promise<Location[]> {
     if (searchLocationDTO.locationName && searchLocationDTO.category) {
-      return null;
+      return await this.locationModel
+        .find({
+          $or: [
+            {
+              locationName: {
+                $regex: searchLocationDTO.locationName,
+                $options: 'i',
+              },
+            },
+            {
+              category: {
+                $regex: searchLocationDTO.category,
+                $options: 'i',
+              },
+            },
+          ],
+        })
+        .sort({ category: 1 })
+        .exec();
     } else if (!searchLocationDTO.locationName && searchLocationDTO.category) {
       return await this.locationModel
         .find({
-          category: { $regex: searchLocationDTO.category, $options: 'i' },
+          category: {
+            $regex: searchLocationDTO.category,
+            $options: 'i',
+          },
         })
         .sort({ category: 1 })
         .exec();
     } else if (searchLocationDTO.locationName && !searchLocationDTO.category) {
-      return null;
+      return await this.locationModel
+        .find({
+          locationName: {
+            $regex: searchLocationDTO.locationName,
+            $options: 'i',
+          },
+        })
+        .sort({ category: 1 })
+        .exec();
     } else {
       return await this.locationModel.find().sort({ category: 1 }).exec();
     }

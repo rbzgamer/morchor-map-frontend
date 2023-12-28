@@ -1,4 +1,4 @@
 export class SearchLocationDTO {
-  locationName: string[];
+  locationName: string;
   category: string;
 }
