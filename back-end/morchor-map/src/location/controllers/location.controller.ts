@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { Location } from '../model/location.model';
 import { LocationService } from '../services/location.service';
@@ -26,7 +27,7 @@ export class LocationController {
 
   @Get('/')
   async searchLocaiton(
-    @Body() searchLocationDTO: SearchLocationDTO,
+    @Query() searchLocationDTO: SearchLocationDTO,
   ): Promise<Location[]> {
     return await this.locationService.getLocation(searchLocationDTO);
   }
