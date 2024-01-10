@@ -26,12 +26,26 @@ export class LocationService {
       return await this.locationModel
         .find({
           $and: [
-            {
-              locationName: {
-                $regex: searchLocationDTO.locationName,
-                $options: 'i',
-              },
-            },
+            ...(searchLocationDTO.locationName
+              ? [
+                  {
+                    $or: [
+                      {
+                        locationName: {
+                          $regex: searchLocationDTO.locationName,
+                          $options: 'i',
+                        },
+                      },
+                      {
+                        room: {
+                          $regex: searchLocationDTO.locationName,
+                          $options: 'i',
+                        },
+                      },
+                    ],
+                  },
+                ]
+              : []),
             {
               category: {
                 $regex: searchLocationDTO.category,
