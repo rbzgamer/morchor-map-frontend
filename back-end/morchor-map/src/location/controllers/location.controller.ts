@@ -13,6 +13,7 @@ import { LocationService } from '../services/location.service';
 import { CreateLocationDTO } from '../dto/CreateLocation.dto';
 import { UpdateLocationDTO } from '../dto/UpdateLocation.dto';
 import { AddLocationNameDTO } from '../dto/AddLocationName.dto';
+import { SearchLocationDTO } from '../dto/SearchLocation.dto';
 
 @Controller('api/location')
 export class LocationController {
@@ -24,8 +25,10 @@ export class LocationController {
   }
 
   @Get('/')
-  async getAllLocation(): Promise<Location[]> {
-    return await this.locationService.getAllLocation();
+  async searchLocaiton(
+    @Body() searchLocationDTO: SearchLocationDTO,
+  ): Promise<Location[]> {
+    return await this.locationService.getLocation(searchLocationDTO);
   }
 
   @Get('/:id')

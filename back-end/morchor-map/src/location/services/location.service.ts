@@ -9,6 +9,7 @@ import { Location } from '../model/location.model';
 import { CreateLocationDTO } from '../dto/CreateLocation.dto';
 import { UpdateLocationDTO } from '../dto/UpdateLocation.dto';
 import { AddLocationNameDTO } from '../dto/AddLocationName.dto';
+import { SearchLocationDTO } from '../dto/SearchLocation.dto';
 
 @Injectable()
 export class LocationService {
@@ -20,8 +21,60 @@ export class LocationService {
     return 'Hello Location!';
   }
 
-  async getAllLocation(): Promise<Location[]> {
-    return await this.locationModel.find().sort({ category: 1 }).exec();
+  async getLocation(searchLocationDTO: SearchLocationDTO): Promise<Location[]> {
+    if (searchLocationDTO.locationName && searchLocationDTO.category) {
+      return await this.locationModel
+        .find({
+          $and: [
+            {
+              locationName: {
+                $regex: searchLocationDTO.locationName,
+                $options: 'i',
+              },
+            },
+            {
+              category: {
+                $regex: searchLocationDTO.category,
+                $options: 'i',
+              },
+            },
+          ],
+        })
+        .sort({ category: 1 })
+        .exec();
+    } else if (!searchLocationDTO.locationName && searchLocationDTO.category) {
+      return await this.locationModel
+        .find({
+          category: {
+            $regex: searchLocationDTO.category,
+            $options: 'i',
+          },
+        })
+        .sort({ category: 1 })
+        .exec();
+    } else if (searchLocationDTO.locationName && !searchLocationDTO.category) {
+      return await this.locationModel
+        .find({
+          $or: [
+            {
+              locationName: {
+                $regex: searchLocationDTO.locationName,
+                $options: 'i',
+              },
+            },
+            {
+              room: {
+                $regex: searchLocationDTO.locationName,
+                $options: 'i',
+              },
+            },
+          ],
+        })
+        .sort({ category: 1 })
+        .exec();
+    } else {
+      return await this.locationModel.find().sort({ category: 1 }).exec();
+    }
   }
 
   async getLocationById(id: string): Promise<Location> {
