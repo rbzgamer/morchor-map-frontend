@@ -91,14 +91,6 @@ export class LocationService {
     }
   }
 
-  async getLocationById(id: string): Promise<Location> {
-    const location = await this.locationModel.findById(id).exec();
-    if (!location) {
-      throw new NotFoundException('Location id:' + id + ' not found.');
-    }
-    return location;
-  }
-
   async addLocation(locationDetails: CreateLocationDTO) {
     const exist_location = await this.locationModel.findOne({
       longtitude: locationDetails.longtitude,
@@ -196,5 +188,9 @@ export class LocationService {
     ];
 
     return await location.save();
+  }
+
+  async getAllCategories(): Promise<string[]> {
+    return await this.locationModel.distinct('category').exec();
   }
 }

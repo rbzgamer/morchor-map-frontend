@@ -32,9 +32,9 @@ export class LocationController {
     return await this.locationService.getLocation(searchLocationDTO);
   }
 
-  @Get('/:id')
-  async getById(@Param('id') id: string): Promise<Location> {
-    return await this.locationService.getLocationById(id);
+  @Get('/categories')
+  async getAllCategories(): Promise<string[]> {
+    return await this.locationService.getAllCategories();
   }
 
   @Post('/add')
