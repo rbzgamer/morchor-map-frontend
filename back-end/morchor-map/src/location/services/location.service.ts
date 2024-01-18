@@ -10,6 +10,8 @@ import { CreateLocationDTO } from '../dto/CreateLocation.dto';
 import { UpdateLocationDTO } from '../dto/UpdateLocation.dto';
 import { AddLocationNameDTO } from '../dto/AddLocationName.dto';
 import { SearchLocationDTO } from '../dto/SearchLocation.dto';
+import { CategoriesResponseDTO } from '../dto/CategoriesResponse.dto';
+import { RoomResponseDTO } from '../dto/RoomResponse.dto';
 
 @Injectable()
 export class LocationService {
@@ -190,7 +192,30 @@ export class LocationService {
     return await location.save();
   }
 
-  async getAllCategories(): Promise<string[]> {
-    return await this.locationModel.distinct('category').exec();
+  async getAllCategories(): Promise<CategoriesResponseDTO> {
+    const categories = await this.locationModel.distinct('category').exec();
+    const dto: CategoriesResponseDTO = {
+      categories: categories,
+    };
+    return dto;
+  }
+
+  async getAllRoomsByLocationName(
+    locationName: string,
+  ): Promise<RoomResponseDTO> {
+    const location = await this.locationModel
+      .findOne({ locationName: locationName })
+      .exec();
+    if (!location) {
+      throw new NotFoundException(
+        'Location name : `' + locationName + '` not found.',
+      );
+    }
+    const rooms = location.room;
+    const dto: RoomResponseDTO = {
+      rooms: rooms,
+    };
+    console.log(location);
+    return dto;
   }
 }
