@@ -1,15 +1,8 @@
 import React, { useEffect, useState } from "react";
-import {
-  List,
-  Button,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Divider,
-} from "@mui/material";
+import { Button } from "@mui/material";
 import "./Navbar.css";
 import Faculty from "./faculty/Faculty";
-import { Routes, Route } from "react-router-dom";
+import Search from "./searching/Search";
 
 const NOMINATIM_BASE_URL = "https://nominatim.openstreetmap.org/search?";
 const params = {
@@ -21,9 +14,15 @@ const params = {
 const Navbar = (props) => {
   const { selectPosition, setSelectPosition } = props;
   const [searchText, setSearchText] = useState("");
-  const [listPlace, setListPlace] = useState([]);
   const token = localStorage.getItem("selectPlace");
   const [nameOfCategory, setNameOfCategory] = useState("");
+  let search = localStorage.getItem("search");
+
+  useEffect(() => {
+    if (token === "Faculty") setNameOfCategory("Category by Faculty");
+    else if (token === "Building") setNameOfCategory("Category by Building");
+    else if (token === "Room") setNameOfCategory("Category by Room");
+  }, []);
 
   const handleGoBack = () => {
     if (token === "Building") {
@@ -35,11 +34,35 @@ const Navbar = (props) => {
     }
   };
 
-  useEffect(() => {
-    if (token === "Faculty") setNameOfCategory("Category by Faculty");
-    else if (token === "Building") setNameOfCategory("Category by Building");
-    else if (token === "Room") setNameOfCategory("Category by Room");
-  }, []);
+  const handleSubmit = async () => {
+    localStorage.setItem("search", searchText);
+    window.location.reload(false);
+  };
+
+  const handleClear = async () => {
+    localStorage.setItem("search", "");
+    setSearchText("");
+    window.location.reload(false);
+  };
+
+  const handleCheckSearch = () => {
+    if (search === "") {
+      console.log(search);
+      return (
+        <>
+          <div style={{ display: "block" }}>{nameOfCategory}</div>
+          <div className="attribute">{Faculty()}</div>
+        </>
+      );
+    } else {
+      console.log(search);
+      return (
+        <>
+          <div className="attribute">{Search()}</div>
+        </>
+      );
+    }
+  };
 
   return (
     <>
@@ -61,36 +84,26 @@ const Navbar = (props) => {
               variant="contained"
               color="primary"
               style={{ top: "10px" }}
-              onClick={() => {
-                // Search
-                const params = {
-                  q: searchText,
-                  format: "json",
-                  addressdetails: 1,
-                  polygon_geojson: 0,
-                };
-                const queryString = new URLSearchParams(params).toString();
-                const requestOptions = {
-                  method: "GET",
-                  redirect: "follow",
-                };
-                fetch(`${NOMINATIM_BASE_URL}${queryString}`, requestOptions)
-                  .then((response) => response.text())
-                  .then((result) => {
-                    setListPlace(JSON.parse(result));
-                  })
-                  .catch((err) => console.log("err: ", err));
-              }}
+              onClick={handleSubmit}
             >
               Search
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              style={{ top: "10px" }}
+              onClick={handleClear}
+            >
+              clear
             </Button>
           </div>
         </form>
         <button type="submit" onClick={handleGoBack} className="rollbackButton">
           Click Here!!
         </button>
-        <div style={{ display: "block" }}>{nameOfCategory}</div>
-        <div className="attribute">{Faculty()}</div>
+        <>{handleCheckSearch()}</>
+        {/* <div style={{ display: "block" }}>{nameOfCategory}</div>
+        <div className="attribute">{Faculty()}</div> */}
       </div>
     </>
   );

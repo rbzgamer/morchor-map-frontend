@@ -12,14 +12,14 @@ const icon = L.icon({
   iconSize: [38, 38],
 });
 
-const ResetCenterView = (props) => {
-  const { selectPosition } = props;
+const ResetCenterView = (latitude, longitude) => {
+  const { selectPosition } = [latitude, longitude];
   const map = useMap();
 
   useEffect(() => {
     if (selectPosition) {
       map.setView(
-        L.latLng(selectPosition?.lat, selectPosition?.lon),
+        L.latLng(18.801588909598827, 98.95336653591599),
         map.getZoom(),
         { animate: true }
       );
@@ -29,17 +29,21 @@ const ResetCenterView = (props) => {
   return null;
 };
 
+//handle marker
+// if select by room or location -> get lat, lon from local store 
+// if select by faculty -> show all location that in this
+// if select by none -> show all location
 const markers = [
-  {
-    id: 0,
-    geocode: [18.795612015074767, 98.95285065288007],
-    popUp: "ตึก 30 ปี",
-  },
-  {
-    id: 1,
-    geocode: [18.801588909598827, 98.95336653591599],
-    popUp: "SCB 1",
-  },
+  // {
+  //   id: 0,
+  //   geocode: [18.795612015074767, 98.95285065288007],
+  //   popUp: "ตึก 30 ปี",
+  // },
+  // {
+  //   id: 1,
+  //   geocode: [18.801588909598827, 98.95336653591599],
+  //   popUp: "SCB 1",
+  // },
   {
     id: 2,
     geocode: [18.797201944092684, 98.95183596448591],
@@ -48,8 +52,9 @@ const markers = [
 ];
 
 const render = (latitude, longitude) => {
+  const { selectPosition } = [latitude, longitude];
   return (
-    <MapContainer center={[latitude, longitude]} zoom={16}>
+    <MapContainer center={[18.797201944092684, 98.95183596448591]} zoom={16}>
       <TileLayer
         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -73,6 +78,7 @@ const render = (latitude, longitude) => {
 
       //get routing
       {/* <Routing/> */}
+      <ResetCenterView selectPosition={selectPosition} />
     </MapContainer>
   );
 };
