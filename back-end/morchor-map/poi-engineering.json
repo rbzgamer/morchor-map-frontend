@@ -3,7 +3,7 @@
         "locationName": ["อาคาร 30 ปี คณะวิศวกรรมศาสตร์", "ตึก 30 ปี"],
         "category": "Engineering",
         "latitude": "18.7956431",
-        "longtitude": "98.9527902",
+        "longitude": "98.9527902",
         "room": [
             "Store Room", "G09 ห้องสื่อสาร", "ME Space", "M25", "M23","ร้านถ่ายเอกสาร", "M29 Engineering for Community", "M02 Meeting room", "216", "217", "218", "219", "220", "221"
             , "Education Information Technology", "M06 ห้องน้ำหญิง", "M07 ห้องน้ำชาย", "M08 ห้องแม่บ้าน", "ทางหนีไฟ", "ห้องพักอาจารย์ธีระพงศ์ ว่องรัตนะไพศาล", "M10 ก้องพักจารย์"
@@ -150,21 +150,21 @@
         "locationName": ["Easy Corner"],
         "category": "Engineering",
         "latitude": "18.7955485",
-        "longtitude": "98.9530575",
+        "longitude": "98.9530575",
         "room": []
     },
     {
         "locationName": ["ใต้ตึก 30 ปี"],
         "category": "Engineering",
         "latitude": "18.7954279",
-        "longtitude": "98.9529250",
+        "longitude": "98.9529250",
         "room": []
     },
     {
         "locationName": ["อาคารวิศวกรรมสำรวจ", "CE08", "EG.B.08"],
         "category": "Engineering",
         "latitude": "18.7951759",
-        "longtitude": "98.9529046",
+        "longitude": "98.9529046",
         "room": [
         "08-107 ห้องน้ำชาย",
         "08-105 ห้องน้ำหญิง",
@@ -185,56 +185,56 @@
         "locationName": ["Au choix cafe&patisserie"],
         "category": "Engineering",
         "latitude": "18.7955694",
-        "longtitude": "98.9531832",
+        "longitude": "98.9531832",
         "room": []
     },
     {
         "locationName": ["พื้นเพลย์", "PuenPlay Cafe"],
         "category": "Engineering",
         "latitude": "18.7956599",
-        "longtitude": "98.9531798",
+        "longitude": "98.9531798",
         "room": []
     },
     {
         "locationName": ["CMU F-1"],
         "category": "Engineering",
         "latitude": "18.7957300",
-        "longtitude": "98.9531758",
+        "longitude": "98.9531758",
         "room": []
     },
     {
         "locationName": ["ชมรมยานยนต์เพื่อการแข่งขัน", "Auto CMU Club"],
         "category": "Engineering",
         "latitude": "18.7958091",
-        "longtitude": "98.9529915",
+        "longitude": "98.9529915",
         "room": []
     },
     {
         "locationName": ["SAE Thailand"],
         "category": "Engineering",
         "latitude": "18.7958126",
-        "longtitude": "98.9529166",
+        "longitude": "98.9529166",
         "room": []
     },
     {
         "locationName": ["ป้ายคณะวิศวกรรมศาสตร์"],
         "category": "Engineering",
         "latitude": "18.7963759",
-        "longtitude": "98.9531108",
+        "longitude": "98.9531108",
         "room": []
     },
     {
         "locationName": ["CNC Workshop"],
         "category": "Engineering",
         "latitude": "18.7958630",
-        "longtitude": "98.9526276",
+        "longitude": "98.9526276",
         "room": []
     },
     {
         "locationName": ["อาคารเครื่องกล 1"],
         "category": "Engineering",
         "latitude": "18.7962660",
-        "longtitude": "98.9528513",
+        "longitude": "98.9528513",
         "room": [
             "ห้องธุรการ",
             "ห้องประชุม",
@@ -289,7 +289,7 @@
         "locationName": ["อาคารเครื่องกล 2"],
         "category": "Engineering",
         "latitude": "18.796110636338195",
-        "longtitude": "98.95265588896775",
+        "longitude": "98.95265588896775",
         "room": [
             "Conference room 1",
             "ห้องน้ำ",
@@ -312,7 +312,7 @@
         "locationName": ["สนามฮอกกี้ มช."],
         "category": "Engineering",
         "latitude": "18.7943303",
-        "longtitude": "98.9528771",
+        "longitude": "98.9528771",
         "room": [],
         "__v": 0
     },
@@ -320,7 +320,7 @@
         "locationName": ["CENDRU", "Civil Engineering Department Chiang Mai University Natural Disasters Research Unit"],
         "category": "Engineering",
         "latitude": "18.7944468",
-        "longtitude": "98.9524580",
+        "longitude": "98.9524580",
         "room": [],
         "__v": 0
     },
@@ -328,7 +328,7 @@
         "locationName": ["CONTECH & Sustainable Engineering"],
         "category": "Engineering",
         "latitude": "18.7944087",
-        "longtitude": "98.9524566",
+        "longitude": "98.9524566",
         "room": [],
         "__v": 0
     },
@@ -336,7 +336,7 @@
         "locationName": ["โรงประลองวิศวกรรมแหล่งน้ำ, อาคาร 06107"],
         "category": "Engineering",
         "latitude": "18.7944462",
-        "longtitude": "98.9523497",
+        "longitude": "98.9523497",
         "room": [
             "ห้องคอมพิวเตอร์คอมพิวเตอร์ ภาควิชาวิศวกรรมโยธา",
             "ห้องน้ำชาย",
@@ -356,7 +356,7 @@
         "locationName": ["โรงประลองวิศวกรรมโครงสร้าง"],
         "category": "Engineering",
         "latitude": "18.7947198",
-        "longtitude": "98.9524496",
+        "longitude": "98.9524496",
         "room": [
             "ห้องน้ำชาย",
             "05-113",
@@ -390,7 +390,7 @@
         "locationName": ["ตู้เต่าบินโยธา"],
         "category": "Engineering",
         "latitude": "18.7948956",
-        "longtitude": "98.9524211",
+        "longitude": "98.9524211",
         "room": [],
         "__v": 0
     },
@@ -398,7 +398,7 @@
         "locationName": ["อาคารบัณฑิตศึกษาวิศวกรรมโยธา", "อาคาร 06117"],
         "category": "Engineering",
         "latitude": "18.7949696",
-        "longtitude": "98.9524164",
+        "longitude": "98.9524164",
         "room": [
             "17-105 ห้องน้ำชาย",
             "17-106 co-working space",
@@ -433,7 +433,7 @@
         "locationName": ["โรงฝึกงาน", "อาคาร 06103"],
         "category": "Engineering",
         "latitude": "18.7950892",
-        "longtitude": "98.9523664",
+        "longitude": "98.9523664",
         "room": [
             "ห้องกลึง",
             "ห้องเชื่อม",
@@ -455,7 +455,7 @@
         "locationName": ["ตู้เต่าบิน RTT"],
         "category": "Engineering",
         "latitude": "18.7955545",
-        "longtitude": "98.9524831",
+        "longitude": "98.9524831",
         "room": [],
         "__v": 0
     },
@@ -463,7 +463,7 @@
         "locationName": ["อาคารวิจัยและถ่ายทอดเทคโนโลยี (40 ปี วิศวฯ)", "Research and Technology Trasfer Building", "ตึก RTT"],
         "category": "Engineering",
         "latitude": "18.7955037",
-        "longtitude": "98.9524302",
+        "longitude": "98.9524302",
         "room": [
             "01-106/00 ห้องนิทรรศการและประชาสัมพันธ์ / Exhibition and Information",
             "01-105/00 ห้องปฏิบัติการฝึกงาน / Workshop Room",
@@ -501,7 +501,7 @@
         "locationName": ["เครื่องกล 3"],
         "category": "Engineering",
         "latitude": "18.7964267",
-        "longtitude": "98.9524979",
+        "longitude": "98.9524979",
         "room": [
             "ห้องน้ำ",
             "107",
@@ -533,7 +533,7 @@
         "locationName": ["ลานเกียร์", "ลานวิศวะรวมใจ"],
         "category": "Engineering",
         "latitude": "18.7941672",
-        "longtitude": "98.9517613",
+        "longitude": "98.9517613",
         "room": [],
         "__v": 0
     },
@@ -541,7 +541,7 @@
         "locationName": ["ลานจอดรถ S2"],
         "category": "Engineering",
         "latitude": "18.7941462",
-        "longtitude": "98.9521418",
+        "longitude": "98.9521418",
         "room": [],
         "__v": 0
     },
@@ -549,7 +549,7 @@
         "locationName": ["ลานพระวิษณุ", "ลานพ่อ"],
         "category": "Engineering",
         "latitude": "18.7945934",
-        "longtitude": "98.9516684",
+        "longitude": "98.9516684",
         "room": [],
         "__v": 0
     },
@@ -557,7 +557,7 @@
         "locationName": ["ห้องสมุดคณะวิศวกรรมศาสตร์"],
         "category": "Engineering",
         "latitude": "18.7943240",
-        "longtitude": "98.9515018",
+        "longitude": "98.9515018",
         "room": [],
         "__v": 0
     },
@@ -565,7 +565,7 @@
         "locationName": ["อาคารเรียนรวม 4 ชั้นคณะวิศวกรรมศาสตร์", "ตึก Drawing", "ตึกดรอว์อิ้ง คณะวิศวกรรมศาสตร์"],
         "category": "Engineering",
         "latitude": "18.7948226",
-        "longtitude": "98.9517083",
+        "longitude": "98.9517083",
         "room": [
             "ห้องสโมสรนักศึกษาคณะวิศวกรรมศาสตร์",
             "Co-studying space",
@@ -588,7 +588,7 @@
         "locationName": ["Roasto Entaneer CMU"],
         "category": "Engineering",
         "latitude": "18.7950820",
-        "longtitude": "98.9513912",
+        "longitude": "98.9513912",
         "room": [],
         "__v": 0
     },
@@ -596,7 +596,7 @@
         "locationName": ["อาคารเรียนรวม", "อาคาร 06116", "ตึกแดง", "ตึกสโลป", "ตึก Slope", "ตึก 3 ชั้น"],
         "category": "Engineering",
         "latitude": "18.7950337",
-        "longtitude": "98.9517375",
+        "longitude": "98.9517375",
         "room": [
             "งานบริการศึกษาคณะวิศวกรรมศาสตร์",
             "Industrial Engineering Faculty of Engineering",
@@ -619,7 +619,7 @@
         "locationName": ["ตู้บุญเติม"],
         "category": "Engineering",
         "latitude": "18.7952720",
-        "longtitude": "98.9515169",
+        "longitude": "98.9515169",
         "room": [],
         "__v": 0
     },
@@ -627,7 +627,7 @@
         "locationName": ["เต่าบิน IE"],
         "category": "Engineering",
         "latitude": "18.7952733",
-        "longtitude": "98.9514984",
+        "longitude": "98.9514984",
         "room": [],
         "__v": 0
     },
@@ -635,7 +635,7 @@
         "locationName": ["ตึก IE", "ภาควิชาวิศวกรรมอุตสาหการ", "Industrial Engineering", "อาคาร 06118"],
         "category": "Engineering",
         "latitude": "18.7954098",
-        "longtitude": "98.9516530",
+        "longitude": "98.9516530",
         "room": [
             "06118-01-008 ห้องน้ำหญิง/ชาย",
             "Design and Development of Advance Manufacturing Technology Research Unit, DDRU, Grad Student Office 01",
@@ -672,7 +672,7 @@
         "locationName": ["อาคาร 06119", "ภาควิชาวิศวกรรมเหมืองแร่และปิโตรเลียม"],
         "category": "Engineering",
         "latitude": "18.7956796",
-        "longtitude": "98.9518850",
+        "longitude": "98.9518850",
         "room": [
             "ห้องนิล",
             "06119-01-001",
@@ -705,7 +705,7 @@
         "locationName": ["อาคาร 06113", "อนุบาลเจอร์ไฟ", "อาคาร EE16", "อาคารเรียน 4 ชั้นภาควิชาวิศวกรรมไฟฟ้า"],
         "category": "Engineering",
         "latitude": "18.7961347",
-        "longtitude": "98.9518780",
+        "longitude": "98.9518780",
         "room": [
             "16-108 ห้องไฟฟ้ากำลัง",
             "16-109 ห้องน้ำชาย",
@@ -758,7 +758,7 @@
         "locationName": ["ภาควิชาวิศวกรรมไฟฟ้า", "อาคาร 06106"],
         "category": "Engineering",
         "latitude": "18.7964220",
-        "longtitude": "98.9518860",
+        "longitude": "98.9518860",
         "room": [
             "ห้องประชุม",
             "ห้องสำนักงานภาควิชาวิศวกรรมไฟฟ้า",
@@ -776,7 +776,7 @@
         "locationName": ["โต๊ะขาว", "ซ่องไฟ"],
         "category": "Engineering",
         "latitude": "18.7963233",
-        "longtitude": "98.9517951",
+        "longitude": "98.9517951",
         "room": [],
         "__v": 0
     },
@@ -789,7 +789,7 @@
         ],
         "category": "Engineering",
         "latitude": "18.7966422",
-        "longtitude": "98.9509291",
+        "longitude": "98.9509291",
         "room": [
             "ห้องน้ำชาย / ห้องน้ำหญิง",
             "ห้องพักอาจารย์ จำนงค์ ใจนวล",
@@ -809,7 +809,7 @@
         "locationName": ["ภาควิชาวิศวกรรมสิ่งแวดล้อม", "อาคาร 06102"],
         "category": "Engineering",
         "latitude": "18.7960144",
-        "longtitude": "98.9508788",
+        "longitude": "98.9508788",
         "room": [
             "ห้องเก็บของเสีย",
             "สำนักงานภาควิชาวิศวกรรมสิ่งแวดล้อม / Administrative Office",
@@ -866,7 +866,7 @@
         "locationName": ["สนามบาสเกตบอล คณะวิศวกรรมศาสตร์"],
         "category": "Engineering",
         "latitude": "18.7956374",
-        "longtitude": "98.9509979",
+        "longitude": "98.9509979",
         "room": [],
         "__v": 0
     },
@@ -874,7 +874,7 @@
         "locationName": ["โรงอาหาร คณะวิศวกรรมศาสตร์"],
         "category": "Engineering",
         "latitude": "18.7952793",
-        "longtitude": "98.9509455",
+        "longitude": "98.9509455",
         "room": [],
         "__v": 0
     }

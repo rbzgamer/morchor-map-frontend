@@ -7,7 +7,7 @@ export class UpdateLocationDTO {
 
   latitude: string;
 
-  longtitude: string;
+  longitude: string;
 
   room: string[];
 }

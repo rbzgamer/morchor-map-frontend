@@ -96,7 +96,7 @@ export class LocationService {
 
   async addLocation(locationDetails: CreateLocationDTO) {
     const exist_location = await this.locationModel.findOne({
-      longtitude: locationDetails.longtitude,
+      longitude: locationDetails.longitude,
       latitude: locationDetails.latitude,
     });
 
@@ -108,14 +108,14 @@ export class LocationService {
       locationDetails.locationName != null ||
       locationDetails.category != null ||
       locationDetails.latitude != null ||
-      locationDetails.longtitude != null
+      locationDetails.longitude != null
     ) {
       const newLocation = new this.locationModel({
         locationName: locationDetails.locationName,
         category: locationDetails.category,
         img: locationDetails.img,
         latitude: locationDetails.latitude,
-        longtitude: locationDetails.longtitude,
+        longitude: locationDetails.longitude,
         room: locationDetails.room,
       });
       await newLocation.save();
@@ -153,12 +153,9 @@ export class LocationService {
         .exec();
     }
 
-    if (updateLocationDetails.longtitude) {
+    if (updateLocationDetails.longitude) {
       await this.locationModel
-        .updateOne(
-          { _id: id },
-          { longtitude: updateLocationDetails.longtitude },
-        )
+        .updateOne({ _id: id }, { longitude: updateLocationDetails.longitude })
         .exec();
     }
 
@@ -224,7 +221,7 @@ export class LocationService {
           locationName: location.locationName[0],
           category: location.category,
           latitude: location.latitude,
-          longtitude: location.longtitude,
+          longitude: location.longitude,
         };
       },
     );

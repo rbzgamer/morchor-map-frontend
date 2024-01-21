@@ -3,7 +3,7 @@
         "locationName": [""],
         "category": "Architecture",
         "latitude": "",
-        "longtitude": "",
+        "longitude": "",
         "room": [
             ""
         ],
@@ -13,7 +13,7 @@
         "locationName": [""],
         "category": "Agriculture",
         "latitude": "",
-        "longtitude": "",
+        "longitude": "",
         "room": [
             ""
         ],
@@ -23,7 +23,7 @@
         "locationName": [""],
         "category": "Engineering",
         "latitude": "",
-        "longtitude": "",
+        "longitude": "",
         "room": [
             ""
         ],
