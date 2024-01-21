@@ -14,12 +14,12 @@ const Faculty = () => {
       redirect: "follow",
     };
 
-    fetch("http://localhost:5000/api/location/categories", requestOptions)
+    fetch("http://localhost:5000/api/locations/categories", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log(result.categories);
+        // console.log(result.categories);
         setChecked(false);
-        setFaculty(result.categories)
+        setFaculty(result.categories);
       })
       .catch((error) => console.log("error", error));
   };
@@ -35,20 +35,53 @@ const Faculty = () => {
 
   const handleClickToBuilding = async () => {
     localStorage.setItem("selectPlace", "Building");
+    localStorage.setItem("filter", true);
     window.location.reload(false);
   };
 
   const handleMouseMove = (input) => {
     localStorage.setItem("categoryName", input);
-  }
+  };
 
   const showFaculty = () => {
     if (!check) {
       const listOrders = faculty.map((object) => {
+        let img = ""
+        if (object === "Engineering") {
+          img = (
+            <img
+              src="https://me.eng.cmu.ac.th/img/logo-me.jpg"
+              width={50}
+              height={50}
+            />
+          );
+        } else if (object === "Architecture") {
+          img = (
+            <img
+              src="https://www.arc.cmu.ac.th/dept/img/archcmu_logo_color.png"
+              width={50}
+              height={50}
+            />
+          );
+        } else if (object === "Agriculture") {
+          img = (
+            <img
+              src="https://www.agri.cmu.ac.th/2017/img/logo/logo_agri_cmu_thai_2012.gif"
+              width={50}
+              height={50}
+            />
+          );
+        }
+
         return (
-          <button type="submit" className="blockForFaculty" onMouseMove={() => handleMouseMove(object)} onClick={handleClickToBuilding}>
+          <button
+            type="submit"
+            className="blockForFaculty"
+            onMouseMove={() => handleMouseMove(object)}
+            onClick={handleClickToBuilding}
+          >
             <div className="search-container">
-            <img src="https://me.eng.cmu.ac.th/img/logo-me.jpg"  width={50} height={50} />
+              {img}
               <div>
                 <div>{object}</div>
               </div>

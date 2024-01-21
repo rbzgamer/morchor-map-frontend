@@ -16,38 +16,51 @@ const Navbar = (props) => {
   const [searchText, setSearchText] = useState("");
   const token = localStorage.getItem("selectPlace");
   const [nameOfCategory, setNameOfCategory] = useState("");
+  const [holderSearch, setHolderSearch] = useState("Search...");
   let search = localStorage.getItem("search");
 
   useEffect(() => {
     if (token === "Faculty") setNameOfCategory("Category by Faculty");
     else if (token === "Building") setNameOfCategory("Category by Building");
     else if (token === "Room") setNameOfCategory("Category by Room");
+
+    if (search !== "") {
+      setHolderSearch(search)
+    }
   }, []);
 
   const handleGoBack = () => {
     if (token === "Building") {
       localStorage.setItem("selectPlace", "Faculty");
+      localStorage.setItem("filter", false);
+      localStorage.setItem("resetViewFromBuilding", false);
+      localStorage.setItem("lat", "");
+      localStorage.setItem("lon", "");
       window.location.reload(false);
     } else if (token === "Room") {
       localStorage.setItem("selectPlace", "Building");
+      localStorage.setItem("resetViewFromRoom", false);
       window.location.reload(false);
     }
   };
 
   const handleSubmit = async () => {
-    localStorage.setItem("search", searchText);
-    window.location.reload(false);
+    if (searchText !== "") {
+      localStorage.setItem("search", searchText);
+      window.location.reload(false);
+    }
   };
 
   const handleClear = async () => {
     localStorage.setItem("search", "");
+    localStorage.setItem("lat", "");
+    localStorage.setItem("lon", "");
     setSearchText("");
     window.location.reload(false);
   };
 
   const handleCheckSearch = () => {
     if (search === "") {
-      console.log(search);
       return (
         <>
           <div style={{ display: "block" }}>{nameOfCategory}</div>
@@ -55,7 +68,6 @@ const Navbar = (props) => {
         </>
       );
     } else {
-      console.log(search);
       return (
         <>
           <div className="attribute">{Search()}</div>
@@ -74,26 +86,16 @@ const Navbar = (props) => {
               type="text"
               className="input"
               id="start"
-              placeholder="Search..."
+              placeholder= {holderSearch}
               value={searchText}
               onChange={(event) => {
                 setSearchText(event.target.value);
               }}
             />
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ top: "10px" }}
-              onClick={handleSubmit}
-            >
+            <Button variant="contained" color="primary" onClick={handleSubmit}>
               Search
             </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              style={{ top: "10px" }}
-              onClick={handleClear}
-            >
+            <Button variant="contained" color="primary" onClick={handleClear}>
               clear
             </Button>
           </div>
@@ -102,8 +104,6 @@ const Navbar = (props) => {
           Click Here!!
         </button>
         <>{handleCheckSearch()}</>
-        {/* <div style={{ display: "block" }}>{nameOfCategory}</div>
-        <div className="attribute">{Faculty()}</div> */}
       </div>
     </>
   );
