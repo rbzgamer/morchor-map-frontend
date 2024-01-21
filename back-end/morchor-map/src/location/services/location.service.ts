@@ -12,6 +12,7 @@ import { AddLocationNameDTO } from '../dto/AddLocationName.dto';
 import { SearchLocationDTO } from '../dto/SearchLocation.dto';
 import { CategoriesResponseDTO } from '../dto/CategoriesResponse.dto';
 import { RoomResponseDTO } from '../dto/RoomResponse.dto';
+import { LocationOneNameDTO } from '../dto/LocationOneName.dto';
 
 @Injectable()
 export class LocationService {
@@ -200,22 +201,33 @@ export class LocationService {
     return dto;
   }
 
-  async getAllRoomsByLocationName(
-    locationName: string,
-  ): Promise<RoomResponseDTO> {
-    const location = await this.locationModel
-      .findOne({ locationName: locationName })
-      .exec();
+  async getAllRoomsByLocationName(id: string): Promise<RoomResponseDTO> {
+    const location = await this.locationModel.findOne({ _id: id }).exec();
     if (!location) {
-      throw new NotFoundException(
-        'Location name : `' + locationName + '` not found.',
-      );
+      throw new NotFoundException('Location id : `' + id + '` not found.');
     }
     const rooms = location.room;
     const dto: RoomResponseDTO = {
       rooms: rooms,
     };
-    console.log(location);
     return dto;
+  }
+
+  async getLocationsWithOneNameAndLatitudeLongtitude(): Promise<
+    LocationOneNameDTO[]
+  > {
+    const locations = await this.locationModel.find().exec();
+
+    const locationOneNameDTO: LocationOneNameDTO[] = locations.map(
+      (location) => {
+        return {
+          locationName: location.locationName[0],
+          category: location.category,
+          latitude: location.latitude,
+          longtitude: location.longtitude,
+        };
+      },
+    );
+    return locationOneNameDTO;
   }
 }

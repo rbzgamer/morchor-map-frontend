@@ -17,8 +17,9 @@ import { AddLocationNameDTO } from '../dto/AddLocationName.dto';
 import { SearchLocationDTO } from '../dto/SearchLocation.dto';
 import { CategoriesResponseDTO } from '../dto/CategoriesResponse.dto';
 import { RoomResponseDTO } from '../dto/RoomResponse.dto';
+import { LocationOneNameDTO } from '../dto/LocationOneName.dto';
 
-@Controller('api/location')
+@Controller('api/locations')
 export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 
@@ -39,11 +40,18 @@ export class LocationController {
     return await this.locationService.getAllCategories();
   }
 
-  @Get('/rooms/:locationName')
+  @Get('/rooms/:id')
   async getAllRoomsByLocationName(
-    @Param('locationName') locationName: string,
+    @Param('id') id: string,
   ): Promise<RoomResponseDTO> {
-    return await this.locationService.getAllRoomsByLocationName(locationName);
+    return await this.locationService.getAllRoomsByLocationName(id);
+  }
+
+  @Get('/one-name')
+  async getLocationWithOneNameAndLatitudeLongtitude(): Promise<
+    LocationOneNameDTO[]
+  > {
+    return await this.locationService.getLocationsWithOneNameAndLatitudeLongtitude();
   }
 
   @Post('/add')
