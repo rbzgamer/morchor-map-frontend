@@ -1,10 +1,32 @@
-{
-    "locationName": [
-      
-    ],
-    "category": "",
-    "latitude": "",
-    "longtitude": "",
-    "room": [],
-    "__v": 0
-}
+[
+    {
+        "locationName": [""],
+        "category": "Architecture",
+        "latitude": "",
+        "longtitude": "",
+        "room": [
+            ""
+        ],
+        "__v": 0
+    },
+    {
+        "locationName": [""],
+        "category": "Agriculture",
+        "latitude": "",
+        "longtitude": "",
+        "room": [
+            ""
+        ],
+        "__v": 0
+    },
+    {
+        "locationName": [""],
+        "category": "Engineering",
+        "latitude": "",
+        "longtitude": "",
+        "room": [
+            ""
+        ],
+        "__v": 0
+    }
+]
