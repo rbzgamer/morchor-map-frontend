@@ -3,10 +3,10 @@ import Building from "../building/Building";
 import Room from "../room/Room";
 import "./Faculty.css";
 
-const Faculty = () => {
+export const Faculty = ({setChoose, setSelectFaculty}) => {
+  const [select, setSelect] = useState("");
   const [check, setChecked] = useState(true);
   const [faculty, setFaculty] = useState([]);
-  let token = localStorage.getItem("selectPlace");
 
   const loadFaculty = async () => {
     var requestOptions = {
@@ -17,30 +17,21 @@ const Faculty = () => {
     fetch("http://localhost:5000/api/locations/categories", requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        // console.log(result.categories);
         setChecked(false);
         setFaculty(result.categories);
       })
       .catch((error) => console.log("error", error));
   };
 
-  useEffect(() => {
-    loadFaculty();
 
-    if (token == null) {
-      token = "Faculty";
-      localStorage.setItem("selectPlace", "Faculty");
-    }
-  }, [token]);
 
   const handleClickToBuilding = async () => {
-    localStorage.setItem("selectPlace", "Building");
-    localStorage.setItem("filter", true);
-    window.location.reload(false);
+    setChoose("Building")
+    setSelectFaculty(select)
   };
 
   const handleMouseMove = (input) => {
-    localStorage.setItem("categoryName", input);
+    setSelect(input)
   };
 
   const showFaculty = () => {
@@ -95,23 +86,21 @@ const Faculty = () => {
     }
   };
 
-  const render = () => {
-    switch (token) {
-      case "Faculty":
-        return <>{showFaculty()}</>;
+  // const render = () => {
+  //   switch (token) {
+  //     case "Faculty":
+  //       return <>{showFaculty()}</>;
 
-      case "Building":
-        return <div>{Building()}</div>;
+  //     case "Building":
+  //       return <div>{Building()}</div>;
 
-      case "Room":
-        return <>{Room()}</>;
+  //     case "Room":
+  //       return <>{Room()}</>;
 
-      default:
-        return <div>Loading...</div>;
-    }
-  };
+  //     default:
+  //       return <div>Loading...</div>;
+  //   }
+  // };
 
-  return <div className="">{render()}</div>;
+  return <div className="">{showFaculty()}</div>;
 };
-
-export default Faculty;

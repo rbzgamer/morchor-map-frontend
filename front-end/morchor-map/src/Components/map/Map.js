@@ -7,20 +7,7 @@ import { useEffect, useState } from "react";
 import "https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js";
 import Routing from "../functions/Routing";
 
-const Map = (props) => {
-  const [latitude, setLatitude] = useState();
-  const [longitude, setLongitude] = useState();
-  const [fetched, setFetched] = useState(false);
-  const checkFilter = localStorage.getItem("filter") === "true";
-  const categoryName = localStorage.getItem("categoryName");
-  const lat = localStorage.getItem("lat");
-  const lon = localStorage.getItem("lon");
-
-  const resetViewFromBuilding = localStorage.getItem("resetViewFromBuilding") === 'true';
-  const resetViewFromRoom = localStorage.getItem("resetViewFromRoom") === 'true';
-
-  navigator.geolocation.getCurrentPosition(showPosition);
-
+export const Map = ({latitude, longitude, userOrLocation, submit, selectFaculty}) => {
   const [location, setLocation] = useState([]);
   const [check, setChecked] = useState([]);
 
@@ -45,21 +32,17 @@ const Map = (props) => {
   };
 
   useEffect(() => {
-    if (lat !== "" && lon !== "") {
-      setLatitude(lat);
-      setLongitude(lon);
-    }
 
     loadBuilding();
   }, []);
 
   const showAllLocation = () => {
     if (!check) {
-      if (lat !== "" && lon !== "" && resetViewFromBuilding && resetViewFromRoom) {
+      if (submit && userOrLocation !== 'user' && latitude !== "" && longitude !== "") {
         return (
           <>
             {location
-              .filter((cate) => cate.latitude === lat && cate.longitude === lon)
+              .filter((cate) => cate.latitude === latitude && cate.longitude === longitude)
               .map((marker) => (
                 <Marker
                   position={[
@@ -75,7 +58,7 @@ const Map = (props) => {
               ))}
           </>
         );
-      } else if (!checkFilter) {
+      } else if (selectFaculty === "") {
         return (
           <>
             {location.map((marker) => (
@@ -97,7 +80,7 @@ const Map = (props) => {
         return (
           <>
             {location
-              .filter((cate) => cate.category == categoryName)
+              .filter((cate) => cate.category == selectFaculty)
               .map((marker) => (
                 <Marker
                   position={[
@@ -119,11 +102,6 @@ const Map = (props) => {
     }
   };
 
-  async function showPosition(po) {
-    setLatitude(po.coords.latitude);
-    setLongitude(po.coords.longitude);
-    setFetched(true);
-  }
 
   const render = (latitude, longitude) => {
     const { selectPosition } = [latitude, longitude];
@@ -147,9 +125,7 @@ const Map = (props) => {
     );
   };
 
-  if (fetched) {
+  // if (fetched) {
     return <>{render(latitude, longitude)}</>;
-  }
+  // }
 };
-
-export default Map;

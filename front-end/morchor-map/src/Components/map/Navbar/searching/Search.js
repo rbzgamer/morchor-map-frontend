@@ -2,10 +2,10 @@ import "./Search.css";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 
-const Search = () => {
+export const Search = ({searchData, setLatitudeFromLocation, setLongitudeFromLocation, setSubmit}) => {
+  console.log("searchData: " + searchData.searchData );
   const [check, setChecked] = useState(true);
   const [search, setSearch] = useState([]);
-  const searchData = localStorage.getItem("search");
   const [lat, setLat] = useState("");
   const [lon, setLon] = useState("");
 
@@ -32,9 +32,9 @@ const Search = () => {
   }, []);
 
   const handleSubmit = async () => {
-    localStorage.setItem("lat", lat);
-    localStorage.setItem("lon", lon);
-    window.location.reload(false);
+    setLatitudeFromLocation(lat)
+    setLongitudeFromLocation(lon)
+    setSubmit(true)
   };
 
   const handleMouseMove = async (lat, lon) => {
@@ -78,4 +78,3 @@ const Search = () => {
   return <>{showSearch()}</>;
 };
 
-export default Search;
