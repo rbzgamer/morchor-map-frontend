@@ -1,47 +1,83 @@
-import "./Building.css"
+import "./Building.css";
+import { useEffect, useState } from "react";
 
 const Building = () => {
+  const [check, setChecked] = useState(true);
+  const [building, setFaculty] = useState([]);
+  const categoryName = localStorage.getItem("categoryName");
+  const [lat, setLat] = useState("");
+  const [lon, setLon] = useState("");
+
+  const loadBuilding = async () => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch(
+      "http://localhost:5000/api/locations/?category=" + categoryName,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        // console.log(result);
+        setChecked(false);
+        setFaculty(result)
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  useEffect(() => {
+    loadBuilding();
+  }, []);
+
   const handleClickToRoom = async () => {
-    localStorage.setItem("selectPlace", "Room")
+    localStorage.setItem("selectPlace", "Room");
+    localStorage.setItem("resetViewFromBuilding", true);
+    localStorage.setItem("lat", lat);
+    localStorage.setItem("lon", lon);
     window.location.reload(false);
   };
 
-  const building = () => {
-    const data = [
-      { name: "อาคาร 30 ปี", age: 28, city: "HO" },
-      { name: "อาคารวิศวกรรมสำรวจ", age: 82, city: "HN" },
-      { name: "อาคารเครื่องกล 1", age: 41, city: "IT" },
-      { name: "อาคารเครื่องกล 2", age: 28, city: "HO" },
-      { name: "อาคารเครื่องกล 3", age: 82, city: "HN" },
-      { name: "อาคารเครื่องกล 4", age: 82, city: "HN" },
-      { name: "สนามฮอกกี้ มช.", age: 28, city: "HO" },
-      { name: "โรงประลองวิศวกรรมแหล่งน้ำ", age: 82, city: "HN" },
-      { name: "โรงประลองวิศวกรรมโครงสร้าง", age: 28, city: "HO" },
-      { name: "อาคารบัณฑิตศึกษาวิศวกรรมโยธา", age: 82, city: "HN" },
-      { name: "โรงฝึกงาน", age: 82, city: "HN" },
-      { name: "อาคารวิจัยและถ่ายทอดเทคโนโลยี", age: 28, city: "HO" },
-    ];
-    const listOrders = data.map((object) => {
-      return (
-        <div className="blockForBuilding">
-          <div className="search-container">
-            <img />
-            <div onClick={handleClickToRoom}>
-              <div>{object.name}</div>
-              <div>{object.city}</div>
-            </div>
-          </div>
-        </div>
-      );
-    });
-    return <div>{listOrders}</div>;
+  const handleSubmit = async () => {
+    localStorage.setItem("lat", lat);
+    localStorage.setItem("lon", lon);
+    localStorage.setItem("resetViewFromBuilding", true);
+    localStorage.setItem("resetViewFromRoom", true);
+    window.location.reload(false);
   };
 
-  return (
-    <>
-      {building()}
-    </>
-  );
+  const handleMouseMove = (input, lat, lon) => {
+    localStorage.setItem("buildingId", input);
+    setLat(lat);
+    setLon(lon);
+  }
+  const showBuilding = () => {
+    if (!check) {
+      const listOrders = building.map((object) => {
+        return (
+          <div className="blockForBuilding" onMouseMove={() => handleMouseMove(object._id, object.latitude, object.longitude)}>
+            <div className="search-container" onClick={handleClickToRoom}>
+            <img
+              src= "https://img.freepik.com/premium-vector/building-logo-icon-design-template-vector_67715-555.jpg"
+              width={50}
+              height={50}
+            />
+              <div>
+                <div>Name: {object.locationName}</div>
+              </div>
+            </div>
+            <button onClick={handleSubmit}>click</button>
+          </div>
+        );
+      });
+      return <div>{listOrders}</div>;
+    }else {
+      return <div>Loading...</div>;
+    }
+  };
+
+  return <>{showBuilding()}</>;
 };
 
 export default Building;

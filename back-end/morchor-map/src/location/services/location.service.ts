@@ -10,6 +10,9 @@ import { CreateLocationDTO } from '../dto/CreateLocation.dto';
 import { UpdateLocationDTO } from '../dto/UpdateLocation.dto';
 import { AddLocationNameDTO } from '../dto/AddLocationName.dto';
 import { SearchLocationDTO } from '../dto/SearchLocation.dto';
+import { CategoriesResponseDTO } from '../dto/CategoriesResponse.dto';
+import { RoomResponseDTO } from '../dto/RoomResponse.dto';
+import { LocationOneNameDTO } from '../dto/LocationOneName.dto';
 
 @Injectable()
 export class LocationService {
@@ -26,12 +29,26 @@ export class LocationService {
       return await this.locationModel
         .find({
           $and: [
-            {
-              locationName: {
-                $regex: searchLocationDTO.locationName,
-                $options: 'i',
-              },
-            },
+            ...(searchLocationDTO.locationName
+              ? [
+                  {
+                    $or: [
+                      {
+                        locationName: {
+                          $regex: searchLocationDTO.locationName,
+                          $options: 'i',
+                        },
+                      },
+                      {
+                        room: {
+                          $regex: searchLocationDTO.locationName,
+                          $options: 'i',
+                        },
+                      },
+                    ],
+                  },
+                ]
+              : []),
             {
               category: {
                 $regex: searchLocationDTO.category,
@@ -77,17 +94,9 @@ export class LocationService {
     }
   }
 
-  async getLocationById(id: string): Promise<Location> {
-    const location = await this.locationModel.findById(id).exec();
-    if (!location) {
-      throw new NotFoundException('Location id:' + id + ' not found.');
-    }
-    return location;
-  }
-
   async addLocation(locationDetails: CreateLocationDTO) {
     const exist_location = await this.locationModel.findOne({
-      longtitude: locationDetails.longtitude,
+      longitude: locationDetails.longitude,
       latitude: locationDetails.latitude,
     });
 
@@ -99,14 +108,14 @@ export class LocationService {
       locationDetails.locationName != null ||
       locationDetails.category != null ||
       locationDetails.latitude != null ||
-      locationDetails.longtitude != null
+      locationDetails.longitude != null
     ) {
       const newLocation = new this.locationModel({
         locationName: locationDetails.locationName,
         category: locationDetails.category,
         img: locationDetails.img,
         latitude: locationDetails.latitude,
-        longtitude: locationDetails.longtitude,
+        longitude: locationDetails.longitude,
         room: locationDetails.room,
       });
       await newLocation.save();
@@ -144,12 +153,9 @@ export class LocationService {
         .exec();
     }
 
-    if (updateLocationDetails.longtitude) {
+    if (updateLocationDetails.longitude) {
       await this.locationModel
-        .updateOne(
-          { _id: id },
-          { longtitude: updateLocationDetails.longtitude },
-        )
+        .updateOne({ _id: id }, { longitude: updateLocationDetails.longitude })
         .exec();
     }
 
@@ -182,5 +188,43 @@ export class LocationService {
     ];
 
     return await location.save();
+  }
+
+  async getAllCategories(): Promise<CategoriesResponseDTO> {
+    const categories = await this.locationModel.distinct('category').exec();
+    const dto: CategoriesResponseDTO = {
+      categories: categories,
+    };
+    return dto;
+  }
+
+  async getAllRoomsByLocationName(id: string): Promise<RoomResponseDTO> {
+    const location = await this.locationModel.findOne({ _id: id }).exec();
+    if (!location) {
+      throw new NotFoundException('Location id : `' + id + '` not found.');
+    }
+    const rooms = location.room;
+    const dto: RoomResponseDTO = {
+      rooms: rooms,
+    };
+    return dto;
+  }
+
+  async getLocationsWithOneNameAndLatitudeLongtitude(): Promise<
+    LocationOneNameDTO[]
+  > {
+    const locations = await this.locationModel.find().exec();
+
+    const locationOneNameDTO: LocationOneNameDTO[] = locations.map(
+      (location) => {
+        return {
+          locationName: location.locationName[0],
+          category: location.category,
+          latitude: location.latitude,
+          longitude: location.longitude,
+        };
+      },
+    );
+    return locationOneNameDTO;
   }
 }

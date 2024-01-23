@@ -7,6 +7,7 @@ import {
   Patch,
   Post,
   Put,
+  Query,
 } from '@nestjs/common';
 import { Location } from '../model/location.model';
 import { LocationService } from '../services/location.service';
@@ -14,8 +15,11 @@ import { CreateLocationDTO } from '../dto/CreateLocation.dto';
 import { UpdateLocationDTO } from '../dto/UpdateLocation.dto';
 import { AddLocationNameDTO } from '../dto/AddLocationName.dto';
 import { SearchLocationDTO } from '../dto/SearchLocation.dto';
+import { CategoriesResponseDTO } from '../dto/CategoriesResponse.dto';
+import { RoomResponseDTO } from '../dto/RoomResponse.dto';
+import { LocationOneNameDTO } from '../dto/LocationOneName.dto';
 
-@Controller('api/location')
+@Controller('api/locations')
 export class LocationController {
   constructor(private readonly locationService: LocationService) {}
 
@@ -26,14 +30,28 @@ export class LocationController {
 
   @Get('/')
   async searchLocaiton(
-    @Body() searchLocationDTO: SearchLocationDTO,
+    @Query() searchLocationDTO: SearchLocationDTO,
   ): Promise<Location[]> {
     return await this.locationService.getLocation(searchLocationDTO);
   }
 
-  @Get('/:id')
-  async getById(@Param('id') id: string): Promise<Location> {
-    return await this.locationService.getLocationById(id);
+  @Get('/categories')
+  async getAllCategories(): Promise<CategoriesResponseDTO> {
+    return await this.locationService.getAllCategories();
+  }
+
+  @Get('/rooms/:id')
+  async getAllRoomsByLocationName(
+    @Param('id') id: string,
+  ): Promise<RoomResponseDTO> {
+    return await this.locationService.getAllRoomsByLocationName(id);
+  }
+
+  @Get('/one-name')
+  async getLocationWithOneNameAndLatitudeLongtitude(): Promise<
+    LocationOneNameDTO[]
+  > {
+    return await this.locationService.getLocationsWithOneNameAndLatitudeLongtitude();
   }
 
   @Post('/add')

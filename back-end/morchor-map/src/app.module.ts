@@ -7,7 +7,8 @@ import { LocationModule } from './location/location.module';
 @Module({
   imports: [
     MongooseModule.forRoot(
-      'mongodb+srv://admin:DJxawOWvdsdBnn4y@finalproject.0siimhv.mongodb.net/',
+      'mongodb+srv://admin:DJxawOWvdsdBnn4y@finalproject.0siimhv.mongodb.net/dev',
+      // 'mongodb+srv://admin:DJxawOWvdsdBnn4y@finalproject.0siimhv.mongodb.net/prod',
     ),
     LocationModule,
   ],

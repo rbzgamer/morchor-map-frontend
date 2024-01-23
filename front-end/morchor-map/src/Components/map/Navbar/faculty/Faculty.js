@@ -1,67 +1,89 @@
 import { useEffect, useState } from "react";
 import Building from "../building/Building";
 import Room from "../room/Room";
-import "./Faculty.css"
+import "./Faculty.css";
 
 const Faculty = () => {
   const [check, setChecked] = useState(true);
+  const [faculty, setFaculty] = useState([]);
   let token = localStorage.getItem("selectPlace");
 
-  const faculty = async () => {
-    setChecked(false);
+  const loadFaculty = async () => {
+    var requestOptions = {
+      method: "GET",
+      redirect: "follow",
+    };
+
+    fetch("http://localhost:5000/api/locations/categories", requestOptions)
+      .then((response) => response.json())
+      .then((result) => {
+        // console.log(result.categories);
+        setChecked(false);
+        setFaculty(result.categories);
+      })
+      .catch((error) => console.log("error", error));
   };
 
   useEffect(() => {
-    Room();
-    Building();
-    faculty();
+    loadFaculty();
 
-    if(token == null) {
-      token = "Faculty"
-      localStorage.setItem("selectPlace", "Faculty")
+    if (token == null) {
+      token = "Faculty";
+      localStorage.setItem("selectPlace", "Faculty");
     }
-  }, token);
+  }, [token]);
 
   const handleClickToBuilding = async () => {
-    localStorage.setItem("selectPlace", "Building")
+    localStorage.setItem("selectPlace", "Building");
+    localStorage.setItem("filter", true);
     window.location.reload(false);
   };
 
-  const fac = () => {
-    if (!check) {
-      const data = [
-        { name: "Faculty of Engineering", age: 28, city: "HO" },
-        { name: "Faculty of Architecture ", age: 82, city: "HN" },
-        { name: "Faculty of Agriculture", age: 41, city: "IT" },
-        { name: "Faculty of Economics", age: 28, city: "HO" },
-        { name: "Faculty of Mas Communication", age: 82, city: "HN" },
-        { name: "Faculty of Nursing", age: 41, city: "IT" },
-        { name: "Faculty of Medicine", age: 28, city: "HO" },
-        { name: "Faculty of Education", age: 82, city: "HN" },
-        { name: "Faculty of Humanities", age: 41, city: "IT" },
-        { name: "Faculty of Law", age: 82, city: "HN" },
-        { name: "Faculty of Science", age: 41, city: "IT" },
+  const handleMouseMove = (input) => {
+    localStorage.setItem("categoryName", input);
+  };
 
-        // { name: "Faculty of Engineering", age: 28, city: "HO" },
-        // { name: "Faculty of Architecture ", age: 82, city: "HN" },
-        // { name: "Faculty of Agriculture", age: 41, city: "IT" },
-        // { name: "Faculty of Economics", age: 28, city: "HO" },
-        // { name: "Faculty of Mas Communication", age: 82, city: "HN" },
-        // { name: "Faculty of Nursing", age: 41, city: "IT" },
-        // { name: "Faculty of Medicine", age: 28, city: "HO" },
-        // { name: "Faculty of Education", age: 82, city: "HN" },
-        // { name: "Faculty of Humanities", age: 41, city: "IT" },
-        // { name: "Faculty of Law", age: 82, city: "HN" },
-        // { name: "Faculty of Science", age: 41, city: "IT" },
-      ];
-      const listOrders = data.map((object) => {
+  const showFaculty = () => {
+    if (!check) {
+      const listOrders = faculty.map((object) => {
+        let img = ""
+        if (object === "Engineering") {
+          img = (
+            <img
+              src="https://me.eng.cmu.ac.th/img/logo-me.jpg"
+              width={50}
+              height={50}
+            />
+          );
+        } else if (object === "Architecture") {
+          img = (
+            <img
+              src="https://www.arc.cmu.ac.th/dept/img/archcmu_logo_color.png"
+              width={50}
+              height={50}
+            />
+          );
+        } else if (object === "Agriculture") {
+          img = (
+            <img
+              src="https://www.agri.cmu.ac.th/2017/img/logo/logo_agri_cmu_thai_2012.gif"
+              width={50}
+              height={50}
+            />
+          );
+        }
+
         return (
-          <button type="submit" className="blockForFaculty">
+          <button
+            type="submit"
+            className="blockForFaculty"
+            onMouseMove={() => handleMouseMove(object)}
+            onClick={handleClickToBuilding}
+          >
             <div className="search-container">
-              <img />
-              <div onClick={handleClickToBuilding}>
-                <div>{object.name}</div>
-                <div>{object.city}</div>
+              {img}
+              <div>
+                <div>{object}</div>
               </div>
             </div>
           </button>
@@ -76,25 +98,13 @@ const Faculty = () => {
   const render = () => {
     switch (token) {
       case "Faculty":
-        return (
-          <>
-            {fac()}
-          </>
-        );
+        return <>{showFaculty()}</>;
 
       case "Building":
-        return (
-          <div>
-            {Building()}
-          </div>
-        );
+        return <div>{Building()}</div>;
 
       case "Room":
-        return (
-          <>
-            {Room()}
-          </>
-        );
+        return <>{Room()}</>;
 
       default:
         return <div>Loading...</div>;

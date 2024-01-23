@@ -16,7 +16,7 @@ export const LocationSchema = new mongoose.Schema({
     type: String,
     require: true,
   },
-  longtitude: {
+  longitude: {
     type: String,
     require: true,
   },
@@ -31,6 +31,6 @@ export interface Location {
   category: string;
   img: string;
   latitude: string;
-  longtitude: string;
+  longitude: string;
   room: string[];
 }

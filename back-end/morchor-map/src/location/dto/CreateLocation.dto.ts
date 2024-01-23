@@ -13,7 +13,7 @@ export class CreateLocationDTO {
   latitude: string;
 
   @IsNotEmpty()
-  longtitude: string;
+  longitude: string;
 
   room: string[];
 }
