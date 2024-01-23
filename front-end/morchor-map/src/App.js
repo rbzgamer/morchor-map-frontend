@@ -43,6 +43,7 @@ function App() {
       latitude = latitudeFromUser;
       longitude = longitudeFromUser;
     }
+    console.log(1);
 
     return (
       <>
@@ -57,7 +58,11 @@ function App() {
             />
           </div>
           <div className="formBlock">
-            <Navbar setResults={setResults} setApprove={setApprove} setSubmit = {setSubmit} results = {results}/>
+            <Navbar
+              setResults={setResults}
+              setApprove={setApprove}
+              setSubmit={setSubmit}
+            />
             {approve && results && results.length > 0 && (
               <Search
                 searchData={results}
@@ -66,14 +71,12 @@ function App() {
                 setSubmit={setSubmit}
               />
             )}
-            {!approve &&
-              (choose === "Faculty" || choose === "") &&
-              !approve && (
-                <Faculty
-                  setChoose={setChoose}
-                  setSelectFaculty={setSelectFaculty}
-                />
-              )}
+            {(choose === "Faculty" || choose === "") && !approve && (
+              <Faculty
+                setChoose={setChoose}
+                setSelectFaculty={setSelectFaculty}
+              />
+            )}
             {!approve && choose === "Building" && (
               <Building
                 setChoose={setChoose}

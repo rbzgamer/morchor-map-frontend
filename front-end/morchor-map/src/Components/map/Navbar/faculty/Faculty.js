@@ -23,7 +23,9 @@ export const Faculty = ({setChoose, setSelectFaculty}) => {
       .catch((error) => console.log("error", error));
   };
 
-
+  useEffect(() => {
+    loadFaculty();
+  }, []);
 
   const handleClickToBuilding = async () => {
     setChoose("Building")
