@@ -13,12 +13,18 @@ import { SearchLocationDTO } from '../dto/SearchLocation.dto';
 import { CategoriesResponseDTO } from '../dto/CategoriesResponse.dto';
 import { RoomResponseDTO } from '../dto/RoomResponse.dto';
 import { LocationOneNameDTO } from '../dto/LocationOneName.dto';
+import {
+  Client,
+  LatLng,
+  TravelMode,
+} from '@googlemaps/google-maps-services-js';
 
 @Injectable()
 export class LocationService {
   constructor(
     @InjectModel('Location') private readonly locationModel: Model<Location>,
   ) {}
+  private client = new Client();
 
   getLocationTest(): string {
     return 'Hello Location!';
@@ -226,5 +232,20 @@ export class LocationService {
       },
     );
     return locationOneNameDTO;
+  }
+
+  async getDirection() {} // dest_lng: string, // dest_lat: string, // src_lng: string, // src_lat: string,
+
+  async getDistance() {
+    // dest_lng: string, // dest_lat: string, // src_lng: string, // src_lat: string,
+    const origins_latlng: LatLng[] = ['18.7955485', '98.9530575'];
+    const dest_latlng: LatLng[] = ['18.7963759', '98.9531108'];
+    return await this.client.distancematrix({
+      params: {
+        origins: origins_latlng, // ez corner
+        destinations: dest_latlng, // ป้ายคณะ
+        key: 'AIzaSyCjDJ4kvD-K4iGhjgfwJczN_JU6gdDi-BE',
+      },
+    });
   }
 }

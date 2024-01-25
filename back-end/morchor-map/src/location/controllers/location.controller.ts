@@ -79,4 +79,9 @@ export class LocationController {
   ) {
     return await this.locationService.addLocationName(id, nameList);
   }
+
+  @Get('/test-gg-maps-api')
+  async testGoogleMapsAPI() {
+    return await this.locationService.getDistance();
+  }
 }
