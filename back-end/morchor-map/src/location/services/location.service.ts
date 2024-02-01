@@ -18,6 +18,7 @@ import {
   LatLng,
   TravelMode,
 } from '@googlemaps/google-maps-services-js';
+require('dotenv').config();
 
 @Injectable()
 export class LocationService {
@@ -237,15 +238,28 @@ export class LocationService {
   async getDirection() {} // dest_lng: string, // dest_lat: string, // src_lng: string, // src_lat: string,
 
   async getDistance() {
-    // dest_lng: string, // dest_lat: string, // src_lng: string, // src_lat: string,
-    const origins_latlng: LatLng[] = ['18.7955485', '98.9530575'];
-    const dest_latlng: LatLng[] = ['18.7963759', '98.9531108'];
-    return await this.client.distancematrix({
-      params: {
-        origins: origins_latlng, // ez corner
-        destinations: dest_latlng, // ป้ายคณะ
-        key: 'AIzaSyCjDJ4kvD-K4iGhjgfwJczN_JU6gdDi-BE',
-      },
-    });
+    const originsLatLng: LatLng[] = ['18.88553676356914,99.02095768517334'];
+    const destLatLng: LatLng[] = ['18.885684098348527,99.02035548929044'];
+
+    try {
+      const response = await this.client.distancematrix({
+        params: {
+          origins: originsLatLng,
+          destinations: destLatLng,
+          key: process.env.GOOGLE_MAPS_API,
+        },
+      });
+
+      // Extract relevant information from the response
+      // const { status, data } = response;
+
+      // Send only the necessary information in the response
+      // return { status, data };
+      return response.data;
+    } catch (error) {
+      // Handle errors
+      console.error('Error fetching distance matrix:', error);
+      throw error;
+    }
   }
 }
