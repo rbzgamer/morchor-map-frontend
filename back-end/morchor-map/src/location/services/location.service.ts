@@ -15,9 +15,11 @@ import { RoomResponseDTO } from '../dto/RoomResponse.dto';
 import { LocationOneNameDTO } from '../dto/LocationOneName.dto';
 import {
   Client,
+  DirectionsResponse,
   LatLng,
   TravelMode,
 } from '@googlemaps/google-maps-services-js';
+import { RoutingLocationDTO } from '../dto/RoutingLocation.dto';
 require('dotenv').config();
 
 @Injectable()
@@ -235,11 +237,31 @@ export class LocationService {
     return locationOneNameDTO;
   }
 
-  async getDirection() {} // dest_lng: string, // dest_lat: string, // src_lng: string, // src_lat: string,
+  async getDirections(routingLocationDTO: RoutingLocationDTO) {
+    const originsLatLng: LatLng = `${routingLocationDTO.originLat},${routingLocationDTO.originLng}`;
+    const destLatLng: LatLng = `${routingLocationDTO.destLat},${routingLocationDTO.destLng}`;
 
-  async getDistance() {
-    const originsLatLng: LatLng[] = ['18.88553676356914,99.02095768517334'];
-    const destLatLng: LatLng[] = ['18.885684098348527,99.02035548929044'];
+    try {
+      const response = await this.client.directions({
+        params: {
+          origin: originsLatLng,
+          destination: destLatLng,
+          key: process.env.GOOGLE_MAPS_API,
+        },
+      });
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching direction:', error);
+      throw error;
+    }
+  }
+  async getDistances(routingLocationDTO: RoutingLocationDTO) {
+    const originsLatLng: LatLng[] = [
+      `${routingLocationDTO.originLat},${routingLocationDTO.originLng}`,
+    ];
+    const destLatLng: LatLng[] = [
+      `${routingLocationDTO.destLat},${routingLocationDTO.destLng}`,
+    ];
 
     try {
       const response = await this.client.distancematrix({
@@ -249,12 +271,6 @@ export class LocationService {
           key: process.env.GOOGLE_MAPS_API,
         },
       });
-
-      // Extract relevant information from the response
-      // const { status, data } = response;
-
-      // Send only the necessary information in the response
-      // return { status, data };
       return response.data;
     } catch (error) {
       // Handle errors

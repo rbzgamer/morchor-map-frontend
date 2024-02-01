@@ -18,6 +18,7 @@ import { SearchLocationDTO } from '../dto/SearchLocation.dto';
 import { CategoriesResponseDTO } from '../dto/CategoriesResponse.dto';
 import { RoomResponseDTO } from '../dto/RoomResponse.dto';
 import { LocationOneNameDTO } from '../dto/LocationOneName.dto';
+import { RoutingLocationDTO } from '../dto/RoutingLocation.dto';
 
 @Controller('api/locations')
 export class LocationController {
@@ -80,8 +81,13 @@ export class LocationController {
     return await this.locationService.addLocationName(id, nameList);
   }
 
-  @Get('/test-gg-maps-api')
-  async testGoogleMapsAPI() {
-    return await this.locationService.getDistance();
+  @Get('/distances')
+  async getDistance(@Query() routingLocationDTO: RoutingLocationDTO) {
+    return await this.locationService.getDistances(routingLocationDTO);
+  }
+
+  @Get('/directions')
+  async getDirections(@Query() routingLocationDTO: RoutingLocationDTO) {
+    return await this.locationService.getDirections(routingLocationDTO);
   }
 }
