@@ -55,8 +55,8 @@ export default function App() {
   async function showPosition(po) {
     setLatitudeFromUser(po.coords.latitude);
     setLongitudeFromUser(po.coords.longitude);
-    setOriginLat(po.coords.latitude);
-    setOriginLng(po.coords.longitude);
+    // setOriginLat(po.coords.latitude);
+    // setOriginLng(po.coords.longitude);
     setFetched(true);
   }
 
@@ -74,6 +74,8 @@ export default function App() {
     }
 
     const position = { lat: latitude, lng: longitude };
+
+    // console.log(originLat + " " + originLng);
 
     return (
       <>
@@ -107,6 +109,7 @@ export default function App() {
                       lng: destinationLng,
                     }}
                     useRoute={useRoute}
+                    setUseRoute={setUseRoute}
                   />
                 )}
               </Map>
@@ -140,6 +143,10 @@ export default function App() {
                 originName={originName}
                 destinationName={destinationName}
                 setUseRoute={setUseRoute}
+                latitudeFromUser={latitudeFromUser}
+                longitudeFromUser={longitudeFromUser}
+                setOriginLat={setOriginLat}
+                setOriginLng={setOriginLng}
               />
             )}
             {/* Search Result*/}
