@@ -1,7 +1,19 @@
 import "./Building.css";
 import { useEffect, useState } from "react";
 
-export const Building = ({ setChoose, setSelectBuilding, selectFaculty, setLatitudeFromLocation, setLongitudeFromLocation, setSubmit, setSelectFaculty }) => {
+import { Box, IconButton, TextField } from "@mui/material";
+import SendIcon from "@mui/icons-material/Send";
+
+export const Building = ({
+  setChoose,
+  setSelectBuilding,
+  selectFaculty,
+  setLatitudeFromLocation,
+  setLongitudeFromLocation,
+  setSubmit,
+  setSelectFaculty,
+  open,
+}) => {
   const [check, setChecked] = useState(true);
   const [building, setFaculty] = useState([]);
   const [lat, setLat] = useState("");
@@ -32,22 +44,22 @@ export const Building = ({ setChoose, setSelectBuilding, selectFaculty, setLatit
   }, []);
 
   const handleClickToRoom = async () => {
-    setLatitudeFromLocation(lat)
-    setLongitudeFromLocation(lon)
+    setLatitudeFromLocation(lat);
+    setLongitudeFromLocation(lon);
     setSelectBuilding(select);
     setChoose("Room");
   };
 
   const handleGoBack = async () => {
-    setSubmit(false)
+    setSubmit(false);
     setChoose("Faculty");
-    setSelectFaculty("")
+    setSelectFaculty("");
   };
 
   const handleSubmit = async () => {
-    setSubmit(true)
-    setLatitudeFromLocation(lat)
-    setLongitudeFromLocation(lon)
+    setSubmit(true);
+    setLatitudeFromLocation(lat);
+    setLongitudeFromLocation(lon);
   };
 
   const handleMouseMove = (input, lat, lon) => {
@@ -75,7 +87,16 @@ export const Building = ({ setChoose, setSelectBuilding, selectFaculty, setLatit
                 <div>Name: {object.locationName}</div>
               </div>
             </div>
-            <button onClick={handleSubmit}>click</button>
+            <IconButton
+              color="primary"
+              sx={{ p: "10px" }}
+              aria-label="directions"
+              onClick={handleSubmit}
+
+              style={{right: "0px"}}
+            >
+              <SendIcon />
+            </IconButton>
           </div>
         );
       });
@@ -90,7 +111,7 @@ export const Building = ({ setChoose, setSelectBuilding, selectFaculty, setLatit
       <button type="submit" onClick={handleGoBack} className="rollbackButton">
         Click Here!!
       </button>
-      {showBuilding()}
+      {open && showBuilding()}
     </>
   );
 };

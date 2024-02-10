@@ -17,6 +17,7 @@
   /* overflow-y: auto; */
 }
 
+
 .input {
   box-sizing: border-box;
   padding: 10px;
@@ -51,14 +52,9 @@ input:nth-child(1) {
   display: flex;
 }
 
-/* .attribute {
-  display: block;
-  height: 82%;
-  overflow-y: auto;
-  margin-top: 10px;
-} */
 
 .rollbackButton {
   padding: 5px 5px;
   margin: 5px;
 }
+

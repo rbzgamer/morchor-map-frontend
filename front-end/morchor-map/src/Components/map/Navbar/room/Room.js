@@ -1,7 +1,16 @@
 import "./Room.css";
 import { useEffect, useState } from "react";
 
-export const Room = ({setChoose, selectBuilding, setLatitudeFromLocation, setLongitudeFromLocation, latitudeFromLocation, longitudeFromLocation, setSubmit}) => {
+export const Room = ({
+  setChoose,
+  selectBuilding,
+  setLatitudeFromLocation,
+  setLongitudeFromLocation,
+  latitudeFromLocation,
+  longitudeFromLocation,
+  setSubmit,
+  open,
+}) => {
   const [check, setChecked] = useState(true);
   const [room, setRoom] = useState([]);
 
@@ -12,8 +21,7 @@ export const Room = ({setChoose, selectBuilding, setLatitudeFromLocation, setLon
     };
 
     fetch(
-      "http://localhost:5000/api/locations/rooms/" +
-        selectBuilding,
+      "http://localhost:5000/api/locations/rooms/" + selectBuilding,
       requestOptions
     )
       .then((response) => response.json())
@@ -30,11 +38,11 @@ export const Room = ({setChoose, selectBuilding, setLatitudeFromLocation, setLon
   }, []);
 
   const handleSubmit = async () => {
-    setSubmit(true)
+    setSubmit(true);
   };
 
   const handleGoBack = async () => {
-    setSubmit(false)
+    setSubmit(false);
     setChoose("Building");
   };
 
@@ -69,7 +77,7 @@ export const Room = ({setChoose, selectBuilding, setLatitudeFromLocation, setLon
       <button type="submit" onClick={handleGoBack} className="rollbackButton">
         Click Here!!
       </button>
-      {showRoom()}
+      {open && showRoom()}
     </>
   );
 };

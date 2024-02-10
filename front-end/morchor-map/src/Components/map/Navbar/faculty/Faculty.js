@@ -3,7 +3,7 @@ import Building from "../building/Building";
 import Room from "../room/Room";
 import "./Faculty.css";
 
-export const Faculty = ({setChoose, setSelectFaculty}) => {
+export const Faculty = ({ setChoose, setSelectFaculty, open }) => {
   const [select, setSelect] = useState("");
   const [check, setChecked] = useState(true);
   const [faculty, setFaculty] = useState([]);
@@ -28,18 +28,18 @@ export const Faculty = ({setChoose, setSelectFaculty}) => {
   }, []);
 
   const handleClickToBuilding = async () => {
-    setChoose("Building")
-    setSelectFaculty(select)
+    setChoose("Building");
+    setSelectFaculty(select);
   };
 
   const handleMouseMove = (input) => {
-    setSelect(input)
+    setSelect(input);
   };
 
   const showFaculty = () => {
     if (!check) {
       const listOrders = faculty.map((object) => {
-        let img = ""
+        let img = "";
         if (object === "Engineering") {
           img = (
             <img
@@ -88,21 +88,5 @@ export const Faculty = ({setChoose, setSelectFaculty}) => {
     }
   };
 
-  // const render = () => {
-  //   switch (token) {
-  //     case "Faculty":
-  //       return <>{showFaculty()}</>;
-
-  //     case "Building":
-  //       return <div>{Building()}</div>;
-
-  //     case "Room":
-  //       return <>{Room()}</>;
-
-  //     default:
-  //       return <div>Loading...</div>;
-  //   }
-  // };
-
-  return <div className="">{showFaculty()}</div>;
+  return <div className="">{open && showFaculty()}</div>;
 };
