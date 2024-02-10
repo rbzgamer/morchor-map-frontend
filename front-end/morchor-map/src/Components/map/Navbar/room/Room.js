@@ -1,15 +1,28 @@
 import "./Room.css";
 import { useEffect, useState } from "react";
 
+import AspectRatio from "@mui/joy/AspectRatio";
+import Card from "@mui/joy/Card";
+import CardContent from "@mui/joy/CardContent";
+import Typography from "@mui/joy/Typography";
+import { IconButton } from "@mui/material";
+import AddLocationIcon from "@mui/icons-material/AddLocation";
+import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
+import NavigationIcon from "@mui/icons-material/Navigation";
+
 export const Room = ({
-  setChoose,
   selectBuilding,
-  setLatitudeFromLocation,
-  setLongitudeFromLocation,
   latitudeFromLocation,
   longitudeFromLocation,
   setSubmit,
   open,
+  setOriginName,
+  setOriginLat,
+  setOriginLng,
+  setDestinationName,
+  setDestinationLat,
+  setDestinationLng,
+  setOpenDirectionBar,
 }) => {
   const [check, setChecked] = useState(true);
   const [room, setRoom] = useState([]);
@@ -26,7 +39,6 @@ export const Room = ({
     )
       .then((response) => response.json())
       .then((result) => {
-        // console.log(result);
         setChecked(false);
         setRoom(result.rooms);
       })
@@ -41,28 +53,81 @@ export const Room = ({
     setSubmit(true);
   };
 
-  const handleGoBack = async () => {
-    setSubmit(false);
-    setChoose("Building");
+  const handleAddToOriginLocation = (locationName) => {
+    setOpenDirectionBar(true)
+    setOriginName(locationName)
+    setOriginLat(latitudeFromLocation);
+    setOriginLng(longitudeFromLocation);
+  };
+
+  const handleAddToDestinationLocation = (locationName) => {
+    setOpenDirectionBar(true)
+    setDestinationName(locationName)
+    setDestinationLat(latitudeFromLocation);
+    setDestinationLng(longitudeFromLocation);
   };
 
   const showRoom = () => {
     if (!check) {
       const listOrders = room.map((object) => {
         return (
-          <div className="blockFromRoom">
-            <div className="search-container">
-              <img
-                src="https://static.vecteezy.com/system/resources/thumbnails/005/502/058/small/hexagon-room-box-line-logo-symbol-icon-graphic-design-illustration-idea-creative-vector.jpg"
-                width={50}
-                height={50}
-              />
-              <div>
-                <div>{object}</div>
-              </div>
-            </div>
-            <button onClick={handleSubmit}>click</button>
-          </div>
+          <>
+            <Card
+              variant="outlined"
+              orientation="horizontal"
+              sx={{
+                width: 510,
+                "&:hover": {
+                  boxShadow: "md",
+                  borderColor: "neutral.outlinedHoverBorder",
+                },
+              }}
+            >
+              <AspectRatio ratio="1" sx={{ width: 50 }}>
+                <img src="https://static.vecteezy.com/system/resources/thumbnails/005/502/058/small/hexagon-room-box-line-logo-symbol-icon-graphic-design-illustration-idea-creative-vector.jpg" />
+              </AspectRatio>
+              <CardContent>
+                <Typography level="title-lg" id="card-description">
+                  {object}
+                </Typography>
+                <Typography
+                  level="body-sm"
+                  aria-describedby="card-description"
+                  mb={1}
+                ></Typography>
+              </CardContent>
+
+              <IconButton
+                color="primary"
+                sx={{ p: "1px" }}
+                aria-label="directions"
+                style={{ right: "0px" }}
+                onClick={handleSubmit}
+              >
+                <NavigationIcon />
+              </IconButton>
+              <IconButton
+                color="secondary"
+                sx={{ p: "1px" }}
+                aria-label="directions"
+                style={{ right: "0px" }}
+                onClick={() => handleAddToOriginLocation(object)}
+              >
+                <AddLocationIcon />
+              </IconButton>
+              <IconButton
+                color="success"
+                sx={{ p: "1px" }}
+                aria-label="directions"
+                style={{ right: "0px" }}
+                onClick={() => {
+                  handleAddToDestinationLocation(object);
+                }}
+              >
+                <AssistantDirectionIcon />
+              </IconButton>
+            </Card>
+          </>
         );
       });
       return <div>{listOrders}</div>;
@@ -71,13 +136,5 @@ export const Room = ({
     }
   };
 
-  return (
-    <>
-      {" "}
-      <button type="submit" onClick={handleGoBack} className="rollbackButton">
-        Click Here!!
-      </button>
-      {open && showRoom()}
-    </>
-  );
+  return <>{open && showRoom()}</>;
 };

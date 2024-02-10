@@ -1,8 +1,15 @@
 import "./Building.css";
 import { useEffect, useState } from "react";
 
-import { Box, IconButton, TextField } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
+import { IconButton, Divider } from "@mui/material";
+
+import AspectRatio from "@mui/joy/AspectRatio";
+import Card from "@mui/joy/Card";
+import CardContent from "@mui/joy/CardContent";
+import Typography from "@mui/joy/Typography";
+import AddLocationIcon from "@mui/icons-material/AddLocation";
+import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
+import NavigationIcon from "@mui/icons-material/Navigation";
 
 export const Building = ({
   setChoose,
@@ -11,8 +18,14 @@ export const Building = ({
   setLatitudeFromLocation,
   setLongitudeFromLocation,
   setSubmit,
-  setSelectFaculty,
   open,
+  setOriginName,
+  setOriginLat,
+  setOriginLng,
+  setDestinationName,
+  setDestinationLat,
+  setDestinationLng,
+  setOpenDirectionBar
 }) => {
   const [check, setChecked] = useState(true);
   const [building, setFaculty] = useState([]);
@@ -50,12 +63,6 @@ export const Building = ({
     setChoose("Room");
   };
 
-  const handleGoBack = async () => {
-    setSubmit(false);
-    setChoose("Faculty");
-    setSelectFaculty("");
-  };
-
   const handleSubmit = async () => {
     setSubmit(true);
     setLatitudeFromLocation(lat);
@@ -67,37 +74,85 @@ export const Building = ({
     setLon(lon);
     setSelect(input);
   };
+
+  const handleAddToOriginLocation = (locationName) => {
+    setOpenDirectionBar(true)
+    setOriginName(locationName[0])
+    setOriginLat(lat);
+    setOriginLng(lon);
+  };
+
+  const handleAddToDestinationLocation = (locationName) => {
+    setOpenDirectionBar(true)
+    setDestinationName(locationName[0])
+    setDestinationLat(lat);
+    setDestinationLng(lon);
+  };
+
   const showBuilding = () => {
     if (!check) {
       const listOrders = building.map((object) => {
         return (
-          <div
-            className="blockForBuilding"
+          <Card
+            variant="outlined"
+            orientation="horizontal"
+            sx={{
+              width: 510,
+              "&:hover": {
+                boxShadow: "md",
+                borderColor: "neutral.outlinedHoverBorder",
+              },
+            }}
             onMouseMove={() =>
               handleMouseMove(object._id, object.latitude, object.longitude)
             }
           >
-            <div className="search-container" onClick={handleClickToRoom}>
-              <img
-                src="https://img.freepik.com/premium-vector/building-logo-icon-design-template-vector_67715-555.jpg"
-                width={50}
-                height={50}
-              />
-              <div>
-                <div>Name: {object.locationName}</div>
-              </div>
-            </div>
+            <AspectRatio
+              ratio="1"
+              sx={{ width: 50 }}
+              onClick={handleClickToRoom}
+            >
+              <img src="https://img.freepik.com/premium-vector/building-logo-icon-design-template-vector_67715-555.jpg" />
+            </AspectRatio>
+            <CardContent onClick={handleClickToRoom}>
+              <Typography level="title-lg" id="card-description">
+                {object.locationName.map((x) => {return(x + " / ")})}
+              </Typography>
+              <Typography
+                level="body-sm"
+                aria-describedby="card-description"
+                mb={1}
+              ></Typography>
+            </CardContent>
+
             <IconButton
               color="primary"
-              sx={{ p: "10px" }}
+              sx={{ p: "1px" }}
               aria-label="directions"
+              style={{ right: "0px" }}
               onClick={handleSubmit}
-
-              style={{right: "0px"}}
             >
-              <SendIcon />
+              <NavigationIcon />
             </IconButton>
-          </div>
+            <IconButton
+              color="secondary"
+              sx={{ p: "1px" }}
+              aria-label="directions"
+              style={{ right: "0px" }}
+              onClick={() => handleAddToOriginLocation(object.locationName)}
+            >
+              <AddLocationIcon />
+            </IconButton>
+            <IconButton
+              color="success"
+              sx={{ p: "1px" }}
+              aria-label="directions"
+              style={{ right: "0px" }}
+              onClick={() => {handleAddToDestinationLocation(object.locationName)}}
+            >
+              <AssistantDirectionIcon />
+            </IconButton>
+          </Card>
         );
       });
       return <div>{listOrders}</div>;
@@ -106,12 +161,5 @@ export const Building = ({
     }
   };
 
-  return (
-    <>
-      <button type="submit" onClick={handleGoBack} className="rollbackButton">
-        Click Here!!
-      </button>
-      {open && showBuilding()}
-    </>
-  );
+  return <>{open && showBuilding()}</>;
 };

@@ -1,16 +1,29 @@
 import { useEffect, useState } from "react";
 import { useMapsLibrary, useMap } from "@vis.gl/react-google-maps";
 
-export const Directions = (location) => {
+export const Directions = ({firstLocation, secondLocation, useRoute, setUseRoute}) => {
   const map = useMap();
   const routeLibrary = useMapsLibrary("routes");
   const [directionService, setDirectionService] = useState();
   const [directionRenderer, setDirectionRenderer] = useState();
   const [route, setRoute] = useState();
 
-  // console.log(location.useRoute);
+  console.log(useRoute);
 
   useEffect(() => {
+    if (firstLocation.lat === "" || firstLocation.lng === "" || firstLocation.lat === undefined || firstLocation.lng === undefined) {
+      setUseRoute(false)
+    }
+  
+    if (secondLocation.lat === "" || secondLocation.lng === "" || secondLocation.lat === undefined || secondLocation.lng === undefined) {
+      setUseRoute(false)
+    }
+  }, [])
+
+
+
+  useEffect(() => {
+
     if (!routeLibrary || !map) return;
     if (!directionService) {
       setDirectionService(new routeLibrary.DirectionsService());
@@ -23,23 +36,23 @@ export const Directions = (location) => {
   useEffect(() => {
     if (!directionService || !directionRenderer) return;
 
-    if (location.useRoute) {
+    if (useRoute) {
       directionService
         .route({
           origin: {
-            lat: location.firstLocation.lat,
-            lng: location.firstLocation.lng,
+            lat: firstLocation.lat,
+            lng: firstLocation.lng,
           },
           destination: {
-            lat: parseFloat(location.secondLocation.lat),
-            lng: parseFloat(location.secondLocation.lng),
+            lat: parseFloat(secondLocation.lat),
+            lng: parseFloat(secondLocation.lng),
           },
           travelMode: "DRIVING",
         })
         .then((response) => {
           directionRenderer.setDirections(response);
-          // setRoute(response.routes);
-          // console.log(response);
+          setRoute(response.routes);
+          console.log(response);
         });
     }
   }, [directionService, directionRenderer]);

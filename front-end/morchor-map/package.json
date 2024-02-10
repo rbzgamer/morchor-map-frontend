@@ -5,6 +5,7 @@
   "dependencies": {
     "@googlemaps/js-api-loader": "^1.16.2",
     "@mui/icons-material": "^5.15.9",
+    "@mui/joy": "^5.0.0-beta.27",
     "@mui/material": "^5.14.12",
     "@react-google-maps/api": "^2.19.2",
     "@testing-library/jest-dom": "^5.16.5",

@@ -3,6 +3,13 @@ import Building from "../building/Building";
 import Room from "../room/Room";
 import "./Faculty.css";
 
+import SendIcon from "@mui/icons-material/Send";
+import AspectRatio from "@mui/joy/AspectRatio";
+import Card from "@mui/joy/Card";
+import CardContent from "@mui/joy/CardContent";
+import Typography from "@mui/joy/Typography";
+import { IconButton } from "@mui/material";
+
 export const Faculty = ({ setChoose, setSelectFaculty, open }) => {
   const [select, setSelect] = useState("");
   const [check, setChecked] = useState(true);
@@ -67,19 +74,33 @@ export const Faculty = ({ setChoose, setSelectFaculty, open }) => {
         }
 
         return (
-          <button
-            type="submit"
-            className="blockForFaculty"
+          <Card
+            variant="outlined"
+            orientation="horizontal"
+            sx={{
+              width: 510,
+              "&:hover": {
+                boxShadow: "md",
+                borderColor: "neutral.outlinedHoverBorder",
+              },
+            }}
             onMouseMove={() => handleMouseMove(object)}
             onClick={handleClickToBuilding}
           >
-            <div className="search-container">
+            <AspectRatio ratio="1" sx={{ width: 50 }}>
               {img}
-              <div>
-                <div>{object}</div>
-              </div>
-            </div>
-          </button>
+            </AspectRatio>
+            <CardContent>
+              <Typography level="title-lg" id="card-description">
+                {object}
+              </Typography>
+              <Typography
+                level="body-sm"
+                aria-describedby="card-description"
+                mb={1}
+              ></Typography>
+            </CardContent>
+          </Card>
         );
       });
       return <div>{listOrders}</div>;

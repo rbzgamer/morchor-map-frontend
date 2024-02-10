@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "./Navbar.css";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import {
   AppBar,
@@ -20,15 +21,23 @@ export const Navbar = ({
   setResults,
   setApprove,
   setSubmit,
-  results,
   setUseRoute,
   open,
   setOpen,
   openDirectionBar,
-  setOpenDirectionBar
+  setOpenDirectionBar,
+  setChoose,
+  setSelectFaculty,
+  choose,
+  setOriginName,
+  setDestinationName,
+  latitudeFromUser,
+  longitudeFromUser,
+  setOriginLat,
+  setOriginLng,
+  useRoute,
 }) => {
   const [searchText, setSearchText] = useState("");
-
 
   const handleSubmit = () => {
     if (searchText !== "") {
@@ -41,6 +50,14 @@ export const Navbar = ({
     setApprove(false);
     setSubmit(false);
     setUseRoute(false);
+    setOriginName("User Location");
+    setDestinationName("Destination");
+    setOriginLat(latitudeFromUser);
+    setOriginLng(longitudeFromUser);
+
+    if (useRoute) {
+      window.location.reload(false);
+    }
   };
 
   const handleOpen = () => {
@@ -48,91 +65,34 @@ export const Navbar = ({
   };
 
   const handleOpenDirectionBar = () => {
-    setOpenDirectionBar(!openDirectionBar)
-  }
+    setOpenDirectionBar(!openDirectionBar);
+  };
+
+  const handleGoBack = () => {
+    setSubmit(false);
+    if (choose === "Building") {
+      setChoose("Faculty");
+      setSelectFaculty("");
+    } else {
+      setChoose("Building");
+    }
+  };
 
   return (
     <>
-      {/* <Box sx={{ flexGrow: 1 }}>
-          <AppBar position="static">
-            <Toolbar>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="open drawer"
-                sx={{ mr: 2 }}
-                onClick={handleOpen}
-              >
-                <MenuIcon />
-              </IconButton>
-
-              <Typography
-                variant="h6"
-                color="inherit"
-                component="div"
-                sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
-              >
-                Morchor Map
-              </Typography>
-
-              <Search
-                style={{ display: "flex" }}
-                placeholder={holderSearch}
-                value={searchText}
-                onChange={(event) => {
-                  setSearchText(event.target.value);
-                  setResults(searchText);
-                }}
-              >
-                <SearchIconWrapper>
-                  <SearchIcon />
-                </SearchIconWrapper>
-                <StyledInputBase
-                  placeholder="Search…"
-                  // placeholder={holderSearch}
-                  inputProps={{ "aria-label": "search" }}
-                />
-                <IconButton color="success" onClick={handleSubmit}>
-                  <SendIcon />
-                </IconButton>
-                <IconButton color="error" onClick={handleClear}>
-                  <DeleteIcon />
-                </IconButton>
-              </Search>
-            </Toolbar>
-          </AppBar>
-        </Box> */}
-
-      {/* <form id="form">
-          <div className="search-container">
-            <TextField
-              fullWidth
-              label="Search"
-              variant="outlined"
-              size="small"
-              placeholder={holderSearch}
-              value={searchText}
-              onChange={(event) => {
-                setSearchText(event.target.value);
-                setResults(searchText);
-              }}
-            />
-            <ButtonGroup variant="contained">
-              <IconButton color="success" onClick={handleSubmit}>
-                <SendIcon />
-              </IconButton>
-              <IconButton color="error" onClick={handleClear}>
-                <DeleteIcon />
-              </IconButton>
-            </ButtonGroup>
-          </div>
-        </form> */}
-
       <Paper
         component="form"
         sx={{ p: "2px 4px", display: "flex", alignItems: "center", width: 510 }}
       >
+        {choose !== "Faculty" && (
+          <>
+            {" "}
+            <IconButton color="black" onClick={handleGoBack}>
+              <ArrowBackIcon />
+            </IconButton>
+            <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
+          </>
+        )}
         <IconButton sx={{ p: "10px" }} aria-label="menu" onClick={handleOpen}>
           <MenuIcon />
         </IconButton>
@@ -154,14 +114,24 @@ export const Navbar = ({
             setResults(searchText);
           }}
         />
-        <IconButton type="button" sx={{ p: "10px" }} aria-label="search" onClick={handleSubmit}>
+        <IconButton
+          type="button"
+          sx={{ p: "10px" }}
+          aria-label="search"
+          onClick={handleSubmit}
+        >
           <SearchIcon />
         </IconButton>
         <IconButton color="error" onClick={handleClear}>
           <DeleteIcon />
         </IconButton>
         <Divider sx={{ height: 28, m: 0.5 }} orientation="vertical" />
-        <IconButton color="primary" sx={{ p: "10px" }} aria-label="directions" onClick={handleOpenDirectionBar}>
+        <IconButton
+          color="primary"
+          sx={{ p: "10px" }}
+          aria-label="directions"
+          onClick={handleOpenDirectionBar}
+        >
           <DirectionsIcon />
         </IconButton>
       </Paper>

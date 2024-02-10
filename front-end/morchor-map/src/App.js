@@ -10,10 +10,14 @@ import { Search } from "./Components/map/Navbar/searching/Search";
 import { Building } from "./Components/map/Navbar/building/Building";
 import { Room } from "./Components/map/Navbar/room/Room";
 import { Directions } from "./Components/map/Directions";
-import SendIcon from "@mui/icons-material/Send";
 import { DirectionBar } from "./Components/map/Navbar/DirectionBar";
 
-// import CardOverflow from '@mui/joy/CardOverflow';
+// import SendIcon from "@mui/icons-material/Send";
+// import AspectRatio from "@mui/joy/AspectRatio";
+// import Card from "@mui/joy/Card";
+// import CardContent from "@mui/joy/CardContent";
+// import Typography from "@mui/joy/Typography";
+// import { IconButton } from "@mui/material";
 
 import {
   APIProvider,
@@ -21,24 +25,11 @@ import {
   Map,
   Marker,
 } from "@vis.gl/react-google-maps";
-// import {
-//   Box,
-//   TextField,
-//   IconButton,
-//   Card,
-//   CardMedia,
-//   CardContent,
-//   Typography,
-//   CardActions,
-//   Button,
-  
-// } from "@mui/material";
-// import DirectionsIcon from "@mui/icons-material/Directions";
 
 export default function App() {
   const [results, setResults] = useState([]);
   const [approve, setApprove] = useState(false);
-  const [choose, setChoose] = useState("");
+  const [choose, setChoose] = useState("Faculty");
   const [selectFaculty, setSelectFaculty] = useState("");
   const [selectBuilding, setSelectBuilding] = useState("");
   const [latitudeFromUser, setLatitudeFromUser] = useState();
@@ -47,11 +38,13 @@ export default function App() {
   const [latitudeFromLocation, setLatitudeFromLocation] = useState();
   const [longitudeFromLocation, setLongitudeFromLocation] = useState();
   const [submit, setSubmit] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   const [openDirectionBar, setOpenDirectionBar] = useState(false);
 
+  const [originName, setOriginName] = useState("User Location");
   const [originLat, setOriginLat] = useState();
   const [originLng, setOriginLng] = useState();
+  const [destinationName, setDestinationName] = useState("Destination");
   const [destinationLat, setDestinationLat] = useState();
   const [destinationLng, setDestinationLng] = useState();
   const [useRoute, setUseRoute] = useState(false);
@@ -87,12 +80,13 @@ export default function App() {
         <div className="application">
           {/* Base Map */}
           <div style={{ height: "100vh", width: "100%" }}>
-            {/* <APIProvider apiKey="AIzaSyC4hElrEUcoCj-GAu6Y6qtfh2xOq4iZf9E">
+            <APIProvider apiKey="AIzaSyC4hElrEUcoCj-GAu6Y6qtfh2xOq4iZf9E">
               <Map center={position} zoom={15} mapId="d024e2b838dd693a">
-
                 <Marker
-                  position={{lat: latitudeFromUser, lng: longitudeFromUser}}
-                  onClick={() => {alert("User Location")}}
+                  position={{ lat: latitudeFromUser, lng: longitudeFromUser }}
+                  onClick={() => {
+                    alert("User Location");
+                  }}
                 ></Marker>
 
                 <MapCon
@@ -116,7 +110,7 @@ export default function App() {
                   />
                 )}
               </Map>
-            </APIProvider> */}
+            </APIProvider>
           </div>
           <div className="formBlock">
             {/* Navbar */}
@@ -129,9 +123,25 @@ export default function App() {
               setOpen={setOpen}
               openDirectionBar={openDirectionBar}
               setOpenDirectionBar={setOpenDirectionBar}
+              setChoose={setChoose}
+              setSelectFaculty={setSelectFaculty}
+              choose={choose}
+              setOriginName={setOriginName}
+              setDestinationName={setDestinationName}
+              latitudeFromUser={latitudeFromUser}
+              longitudeFromUser={longitudeFromUser}
+              setOriginLat={setOriginLat}
+              setOriginLng={setOriginLng}
+              useRoute={useRoute}
             />
             {/* Route Bar */}
-            {openDirectionBar && <DirectionBar />}
+            {openDirectionBar && (
+              <DirectionBar
+                originName={originName}
+                destinationName={destinationName}
+                setUseRoute={setUseRoute}
+              />
+            )}
             {/* Search Result*/}
             {approve && results && results.length > 0 && (
               <Search
@@ -139,6 +149,13 @@ export default function App() {
                 setLatitudeFromLocation={setLatitudeFromLocation}
                 setLongitudeFromLocation={setLongitudeFromLocation}
                 setSubmit={setSubmit}
+                setOriginName={setOriginName}
+                setOriginLat={setOriginLat}
+                setOriginLng={setOriginLng}
+                setDestinationName={setDestinationName}
+                setDestinationLat={setDestinationLat}
+                setDestinationLng={setDestinationLng}
+                setOpenDirectionBar={setOpenDirectionBar}
               />
             )}
             {/* Category Result */}
@@ -158,49 +175,33 @@ export default function App() {
                 setLatitudeFromLocation={setLatitudeFromLocation}
                 setLongitudeFromLocation={setLongitudeFromLocation}
                 setSubmit={setSubmit}
-                setSelectFaculty={setSelectFaculty}
                 open={open}
+                setOriginName={setOriginName}
+                setOriginLat={setOriginLat}
+                setOriginLng={setOriginLng}
+                setDestinationName={setDestinationName}
+                setDestinationLat={setDestinationLat}
+                setDestinationLng={setDestinationLng}
+                setOpenDirectionBar={setOpenDirectionBar}
               />
             )}
             {/* Room Result */}
             {!approve && choose === "Room" && (
               <Room
-                setChoose={setChoose}
                 selectBuilding={selectBuilding}
-                setLatitudeFromLocation={setLatitudeFromLocation}
-                setLongitudeFromLocation={setLongitudeFromLocation}
                 latitudeFromLocation={latitudeFromLocation}
                 longitudeFromLocation={longitudeFromLocation}
                 setSubmit={setSubmit}
                 open={open}
+                setOriginName={setOriginName}
+                setOriginLat={setOriginLat}
+                setOriginLng={setOriginLng}
+                setDestinationName={setDestinationName}
+                setDestinationLat={setDestinationLat}
+                setDestinationLng={setDestinationLng}
+                setOpenDirectionBar={setOpenDirectionBar}
               />
             )}
-
-            {/* <Card sx={{ maxWidth: 510 }}>
-              <div>
-                <CardOverflow
-                  sx={{ height: 140 }}
-                  image="https://img.freepik.com/premium-vector/building-logo-icon-design-template-vector_67715-555.jpg"
-                  width={50}
-                  height={50}
-                  title="green iguana"
-                />
-                <CardContent>
-                  <Typography gutterBottom variant="h5" component="div">
-                    Lizard
-                  </Typography>
-                  <Typography variant="body2" color="text.secondary">
-                    Lizards are a widespread group of squamate reptiles, with
-                    over 6,000 species, ranging across all continents except
-                    Antarctica
-                  </Typography>
-                </CardContent>
-              </div>
-              <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
-              </CardActions>
-            </Card> */}
           </div>
         </div>
       </>
