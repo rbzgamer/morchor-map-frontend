@@ -3,7 +3,14 @@ import Building from "../building/Building";
 import Room from "../room/Room";
 import "./Faculty.css";
 
-export const Faculty = ({setChoose, setSelectFaculty}) => {
+import SendIcon from "@mui/icons-material/Send";
+import AspectRatio from "@mui/joy/AspectRatio";
+import Card from "@mui/joy/Card";
+import CardContent from "@mui/joy/CardContent";
+import Typography from "@mui/joy/Typography";
+import { IconButton } from "@mui/material";
+
+export const Faculty = ({ setChoose, setSelectFaculty, open }) => {
   const [select, setSelect] = useState("");
   const [check, setChecked] = useState(true);
   const [faculty, setFaculty] = useState([]);
@@ -28,18 +35,18 @@ export const Faculty = ({setChoose, setSelectFaculty}) => {
   }, []);
 
   const handleClickToBuilding = async () => {
-    setChoose("Building")
-    setSelectFaculty(select)
+    setChoose("Building");
+    setSelectFaculty(select);
   };
 
   const handleMouseMove = (input) => {
-    setSelect(input)
+    setSelect(input);
   };
 
   const showFaculty = () => {
     if (!check) {
       const listOrders = faculty.map((object) => {
-        let img = ""
+        let img = "";
         if (object === "Engineering") {
           img = (
             <img
@@ -67,19 +74,33 @@ export const Faculty = ({setChoose, setSelectFaculty}) => {
         }
 
         return (
-          <button
-            type="submit"
-            className="blockForFaculty"
+          <Card
+            variant="outlined"
+            orientation="horizontal"
+            sx={{
+              width: 510,
+              "&:hover": {
+                boxShadow: "md",
+                borderColor: "neutral.outlinedHoverBorder",
+              },
+            }}
             onMouseMove={() => handleMouseMove(object)}
             onClick={handleClickToBuilding}
           >
-            <div className="search-container">
+            <AspectRatio ratio="1" sx={{ width: 50 }}>
               {img}
-              <div>
-                <div>{object}</div>
-              </div>
-            </div>
-          </button>
+            </AspectRatio>
+            <CardContent>
+              <Typography level="title-lg" id="card-description">
+                {object}
+              </Typography>
+              <Typography
+                level="body-sm"
+                aria-describedby="card-description"
+                mb={1}
+              ></Typography>
+            </CardContent>
+          </Card>
         );
       });
       return <div>{listOrders}</div>;
@@ -88,21 +109,5 @@ export const Faculty = ({setChoose, setSelectFaculty}) => {
     }
   };
 
-  // const render = () => {
-  //   switch (token) {
-  //     case "Faculty":
-  //       return <>{showFaculty()}</>;
-
-  //     case "Building":
-  //       return <div>{Building()}</div>;
-
-  //     case "Room":
-  //       return <>{Room()}</>;
-
-  //     default:
-  //       return <div>Loading...</div>;
-  //   }
-  // };
-
-  return <div className="">{showFaculty()}</div>;
+  return <div className="">{open && showFaculty()}</div>;
 };

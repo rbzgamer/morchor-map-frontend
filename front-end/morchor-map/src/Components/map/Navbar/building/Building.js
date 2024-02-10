@@ -1,7 +1,32 @@
 import "./Building.css";
 import { useEffect, useState } from "react";
 
-export const Building = ({ setChoose, setSelectBuilding, selectFaculty, setLatitudeFromLocation, setLongitudeFromLocation, setSubmit, setSelectFaculty }) => {
+import { IconButton, Divider } from "@mui/material";
+
+import AspectRatio from "@mui/joy/AspectRatio";
+import Card from "@mui/joy/Card";
+import CardContent from "@mui/joy/CardContent";
+import Typography from "@mui/joy/Typography";
+import AddLocationIcon from "@mui/icons-material/AddLocation";
+import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
+import NavigationIcon from "@mui/icons-material/Navigation";
+
+export const Building = ({
+  setChoose,
+  setSelectBuilding,
+  selectFaculty,
+  setLatitudeFromLocation,
+  setLongitudeFromLocation,
+  setSubmit,
+  open,
+  setOriginName,
+  setOriginLat,
+  setOriginLng,
+  setDestinationName,
+  setDestinationLat,
+  setDestinationLng,
+  setOpenDirectionBar
+}) => {
   const [check, setChecked] = useState(true);
   const [building, setFaculty] = useState([]);
   const [lat, setLat] = useState("");
@@ -32,22 +57,16 @@ export const Building = ({ setChoose, setSelectBuilding, selectFaculty, setLatit
   }, []);
 
   const handleClickToRoom = async () => {
-    setLatitudeFromLocation(lat)
-    setLongitudeFromLocation(lon)
+    setLatitudeFromLocation(lat);
+    setLongitudeFromLocation(lon);
     setSelectBuilding(select);
     setChoose("Room");
   };
 
-  const handleGoBack = async () => {
-    setSubmit(false)
-    setChoose("Faculty");
-    setSelectFaculty("")
-  };
-
   const handleSubmit = async () => {
-    setSubmit(true)
-    setLatitudeFromLocation(lat)
-    setLongitudeFromLocation(lon)
+    setSubmit(true);
+    setLatitudeFromLocation(lat);
+    setLongitudeFromLocation(lon);
   };
 
   const handleMouseMove = (input, lat, lon) => {
@@ -55,28 +74,85 @@ export const Building = ({ setChoose, setSelectBuilding, selectFaculty, setLatit
     setLon(lon);
     setSelect(input);
   };
+
+  const handleAddToOriginLocation = (locationName) => {
+    setOpenDirectionBar(true)
+    setOriginName(locationName[0])
+    setOriginLat(lat);
+    setOriginLng(lon);
+  };
+
+  const handleAddToDestinationLocation = (locationName) => {
+    setOpenDirectionBar(true)
+    setDestinationName(locationName[0])
+    setDestinationLat(lat);
+    setDestinationLng(lon);
+  };
+
   const showBuilding = () => {
     if (!check) {
       const listOrders = building.map((object) => {
         return (
-          <div
-            className="blockForBuilding"
+          <Card
+            variant="outlined"
+            orientation="horizontal"
+            sx={{
+              width: 510,
+              "&:hover": {
+                boxShadow: "md",
+                borderColor: "neutral.outlinedHoverBorder",
+              },
+            }}
             onMouseMove={() =>
               handleMouseMove(object._id, object.latitude, object.longitude)
             }
           >
-            <div className="search-container" onClick={handleClickToRoom}>
-              <img
-                src="https://img.freepik.com/premium-vector/building-logo-icon-design-template-vector_67715-555.jpg"
-                width={50}
-                height={50}
-              />
-              <div>
-                <div>Name: {object.locationName}</div>
-              </div>
-            </div>
-            <button onClick={handleSubmit}>click</button>
-          </div>
+            <AspectRatio
+              ratio="1"
+              sx={{ width: 50 }}
+              onClick={handleClickToRoom}
+            >
+              <img src="https://img.freepik.com/premium-vector/building-logo-icon-design-template-vector_67715-555.jpg" />
+            </AspectRatio>
+            <CardContent onClick={handleClickToRoom}>
+              <Typography level="title-lg" id="card-description">
+                {object.locationName.map((x) => {return(x + " / ")})}
+              </Typography>
+              <Typography
+                level="body-sm"
+                aria-describedby="card-description"
+                mb={1}
+              ></Typography>
+            </CardContent>
+
+            <IconButton
+              color="primary"
+              sx={{ p: "1px" }}
+              aria-label="directions"
+              style={{ right: "0px" }}
+              onClick={handleSubmit}
+            >
+              <NavigationIcon />
+            </IconButton>
+            <IconButton
+              color="secondary"
+              sx={{ p: "1px" }}
+              aria-label="directions"
+              style={{ right: "0px" }}
+              onClick={() => handleAddToOriginLocation(object.locationName)}
+            >
+              <AddLocationIcon />
+            </IconButton>
+            <IconButton
+              color="success"
+              sx={{ p: "1px" }}
+              aria-label="directions"
+              style={{ right: "0px" }}
+              onClick={() => {handleAddToDestinationLocation(object.locationName)}}
+            >
+              <AssistantDirectionIcon />
+            </IconButton>
+          </Card>
         );
       });
       return <div>{listOrders}</div>;
@@ -85,12 +161,5 @@ export const Building = ({ setChoose, setSelectBuilding, selectFaculty, setLatit
     }
   };
 
-  return (
-    <>
-      <button type="submit" onClick={handleGoBack} className="rollbackButton">
-        Click Here!!
-      </button>
-      {showBuilding()}
-    </>
-  );
+  return <>{open && showBuilding()}</>;
 };

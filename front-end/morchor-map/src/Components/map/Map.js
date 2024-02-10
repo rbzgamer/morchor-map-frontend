@@ -1,13 +1,23 @@
 import "./Map.css";
 import "leaflet/dist/leaflet.css";
 
-import { MapContainer, Marker, Popup, TileLayer, useMap } from "react-leaflet";
+// import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import { useEffect, useState } from "react";
-import "https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js";
-import Routing from "../functions/Routing";
 
-export const Map = ({latitude, longitude, userOrLocation, submit, selectFaculty}) => {
+import Routing from "../functions/Routing";
+import { Marker } from "@vis.gl/react-google-maps";
+
+export const MapCon = ({
+  latitude,
+  longitude,
+  userOrLocation,
+  submit,
+  selectFaculty,
+  setUseRoute,
+  setDestinationLat,
+  setDestinationLng,
+}) => {
   const [location, setLocation] = useState([]);
   const [check, setChecked] = useState([]);
 
@@ -32,100 +42,148 @@ export const Map = ({latitude, longitude, userOrLocation, submit, selectFaculty}
   };
 
   useEffect(() => {
-
     loadBuilding();
   }, []);
 
   const showAllLocation = () => {
     if (!check) {
-      if (submit && userOrLocation !== 'user' && latitude !== "" && longitude !== "") {
+      if (
+        submit &&
+        userOrLocation !== "user" &&
+        latitude !== "" &&
+        longitude !== ""
+      ) {
+        console.log(1);
         return (
           <>
-            {location
-              .filter((cate) => cate.latitude === latitude && cate.longitude === longitude)
-              .map((marker) => (
-                <Marker
-                  position={[
-                    parseFloat(marker.latitude),
-                    parseFloat(marker.longitude),
-                  ]}
-                  icon={icon}
-                >
-                  <Popup>
-                    <h2>{marker.locationName}</h2>
-                  </Popup>
-                </Marker>
-              ))}
+            {location.map((marker) => {
+              if (
+                parseFloat(marker.latitude) === latitude &&
+                parseFloat(marker.longitude) === longitude
+              ) {
+                const position = {
+                  lat: parseFloat(marker.latitude),
+                  lng: parseFloat(marker.longitude),
+                };
+                return (
+                  <>
+                    <Marker
+                      position={position}
+                      onClick={() => {
+                        setUseRoute(true)
+                        setDestinationLat(marker.latitude)
+                        setDestinationLng(marker.longitude)
+                      }}
+                    ></Marker>
+                  </>
+                );
+              }
+            })}
           </>
         );
       } else if (selectFaculty === "") {
+        console.log(2);
         return (
           <>
-            {location.map((marker) => (
-              <Marker
-                position={[
-                  parseFloat(marker.latitude),
-                  parseFloat(marker.longitude),
-                ]}
-                icon={icon}
-              >
-                <Popup>
-                  <h2>{marker.locationName}</h2>
-                </Popup>
-              </Marker>
-            ))}
+            {location.map((marker) => {
+              const position = {
+                lat: parseFloat(marker.latitude),
+                lng: parseFloat(marker.longitude),
+              };
+              return (
+                <>
+                  <Marker
+                    position={position}
+                    onClick={() => {
+                      // setUseRoute(true)
+                      // setDestinationLat(marker.latitude)
+                      // setDestinationLng(marker.longitude)
+                      alert(marker.locationName);
+                    }}
+                  ></Marker>
+                  {/* {open && (
+                    <InfoWindow
+                      position={position}
+                      onCloseClick={() => setOpen(false)}
+                    >
+                      <h2>{marker.locationName}</h2>
+                    </InfoWindow>
+                  )} */}
+                </>
+              );
+            })}
           </>
         );
       } else {
+        console.log(3);
         return (
           <>
             {location
               .filter((cate) => cate.category == selectFaculty)
-              .map((marker) => (
-                <Marker
-                  position={[
-                    parseFloat(marker.latitude),
-                    parseFloat(marker.longitude),
-                  ]}
-                  icon={icon}
-                >
-                  <Popup>
-                    <h2>{marker.locationName}</h2>
-                  </Popup>
-                </Marker>
-              ))}
+              .map((marker) => {
+                const position = {
+                  lat: parseFloat(marker.latitude),
+                  lng: parseFloat(marker.longitude),
+                };
+                return (
+                  <>
+                    <Marker
+                      position={position}
+                      onClick={() => {
+                        alert(marker.locationName);
+                      }}
+                    ></Marker>
+                    {/* {open && (
+                      <InfoWindow
+                        position={position}
+                        onCloseClick={() => setOpen(false)}
+                      >
+                        <h2>{marker.locationName}</h2>
+                      </InfoWindow>
+                    )} */}
+                  </>
+                );
+              })}
           </>
         );
       }
-    } else {
-      return <></>;
     }
   };
 
+  useEffect(() => {
+    showAllLocation();
+  }, [latitude, longitude, userOrLocation, submit, selectFaculty]);
 
-  const render = (latitude, longitude) => {
-    const { selectPosition } = [latitude, longitude];
+  // const render = (latitude, longitude) => {
+  //   const { selectPosition } = [latitude, longitude];
 
-    return (
-      <MapContainer center={[latitude, longitude]} zoom={16}>
-        <TileLayer
-          url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-        />
-        // marker
-        {showAllLocation()}
-        // get user position
-        <Marker position={[latitude, longitude]} icon={icon}>
-          <Popup>User Location</Popup>
-        </Marker>
-        //get routing
-        {/* <Routing/> */}
-        {/* <ResetCenterView selectPosition={selectPosition} /> */}
-      </MapContainer>
-    );
-  };
+  //   return (
+  //     <MapContainer center={[latitude, longitude]} zoom={16}>
+  //       <TileLayer
+  //         url="https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+  //         attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+  //       />
 
-  // if (fetched) {
-    return <>{render(latitude, longitude)}</>;
-  // }
+  //       {showAllLocation()}
+
+  //       <Marker position={[latitude, longitude]} icon={icon}>
+  //         <Popup>User Location</Popup>
+  //       </Marker>
+
+  //       {/* {directions && <DirectionsRenderer directions={directions} />} */}
+  //       {/* <Directions directions={directions} /> */}
+
+  //       <Routing/>
+
+  //       <Marker position={[18.7956489, 98.952533]} icon={icon}>
+  //         <Popup>Start Location</Popup>
+  //       </Marker>
+  //       <Marker position={[18.7964371, 98.95319780000001]} icon={icon}>
+  //         <Popup>End Location</Popup>
+  //       </Marker>
+  //     </MapContainer>
+  //   );
+  // };
+
+  return <>{showAllLocation()}</>;
 };
