@@ -80,14 +80,4 @@ export class LocationController {
   ) {
     return await this.locationService.addLocationName(id, nameList);
   }
-
-  @Get('/distances')
-  async getDistance(@Query() routingLocationDTO: RoutingLocationDTO) {
-    return await this.locationService.getDistances(routingLocationDTO);
-  }
-
-  @Get('/directions')
-  async getDirections(@Query() routingLocationDTO: RoutingLocationDTO) {
-    return await this.locationService.getDirections(routingLocationDTO);
-  }
 }

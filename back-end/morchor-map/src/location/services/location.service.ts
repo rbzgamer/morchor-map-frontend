@@ -13,13 +13,6 @@ import { SearchLocationDTO } from '../dto/SearchLocation.dto';
 import { CategoriesResponseDTO } from '../dto/CategoriesResponse.dto';
 import { RoomResponseDTO } from '../dto/RoomResponse.dto';
 import { LocationOneNameDTO } from '../dto/LocationOneName.dto';
-import {
-  Client,
-  DirectionsResponse,
-  LatLng,
-  TravelMode,
-} from '@googlemaps/google-maps-services-js';
-import { RoutingLocationDTO } from '../dto/RoutingLocation.dto';
 require('dotenv').config();
 
 @Injectable()
@@ -27,7 +20,6 @@ export class LocationService {
   constructor(
     @InjectModel('Location') private readonly locationModel: Model<Location>,
   ) {}
-  private client = new Client();
 
   getLocationTest(): string {
     return 'Hello Location!';
@@ -235,47 +227,5 @@ export class LocationService {
       },
     );
     return locationOneNameDTO;
-  }
-
-  async getDirections(routingLocationDTO: RoutingLocationDTO) {
-    const originsLatLng: LatLng = `${routingLocationDTO.originLat},${routingLocationDTO.originLng}`;
-    const destLatLng: LatLng = `${routingLocationDTO.destLat},${routingLocationDTO.destLng}`;
-
-    try {
-      const response = await this.client.directions({
-        params: {
-          origin: originsLatLng,
-          destination: destLatLng,
-          key: process.env.GOOGLE_MAPS_API,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      console.error('Error fetching direction:', error);
-      throw error;
-    }
-  }
-  async getDistances(routingLocationDTO: RoutingLocationDTO) {
-    const originsLatLng: LatLng[] = [
-      `${routingLocationDTO.originLat},${routingLocationDTO.originLng}`,
-    ];
-    const destLatLng: LatLng[] = [
-      `${routingLocationDTO.destLat},${routingLocationDTO.destLng}`,
-    ];
-
-    try {
-      const response = await this.client.distancematrix({
-        params: {
-          origins: originsLatLng,
-          destinations: destLatLng,
-          key: process.env.GOOGLE_MAPS_API,
-        },
-      });
-      return response.data;
-    } catch (error) {
-      // Handle errors
-      console.error('Error fetching distance matrix:', error);
-      throw error;
-    }
   }
 }
