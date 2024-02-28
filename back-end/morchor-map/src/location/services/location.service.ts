@@ -13,6 +13,12 @@ import { SearchLocationDTO } from '../dto/SearchLocation.dto';
 import { CategoriesResponseDTO } from '../dto/CategoriesResponse.dto';
 import { RoomResponseDTO } from '../dto/RoomResponse.dto';
 import { LocationOneNameDTO } from '../dto/LocationOneName.dto';
+import {
+  Client,
+  Place,
+  PlaceData,
+  PlacesNearbyResponse,
+} from '@googlemaps/google-maps-services-js';
 require('dotenv').config();
 
 @Injectable()
@@ -21,78 +27,14 @@ export class LocationService {
     @InjectModel('Location') private readonly locationModel: Model<Location>,
   ) {}
 
+  private client = new Client();
+
   getLocationTest(): string {
     return 'Hello Location!';
   }
 
   async getLocation(searchLocationDTO: SearchLocationDTO): Promise<Location[]> {
-    if (searchLocationDTO.locationName && searchLocationDTO.category) {
-      return await this.locationModel
-        .find({
-          $and: [
-            ...(searchLocationDTO.locationName
-              ? [
-                  {
-                    $or: [
-                      {
-                        locationName: {
-                          $regex: searchLocationDTO.locationName,
-                          $options: 'i',
-                        },
-                      },
-                      {
-                        room: {
-                          $regex: searchLocationDTO.locationName,
-                          $options: 'i',
-                        },
-                      },
-                    ],
-                  },
-                ]
-              : []),
-            {
-              category: {
-                $regex: searchLocationDTO.category,
-                $options: 'i',
-              },
-            },
-          ],
-        })
-        .sort({ category: 1 })
-        .exec();
-    } else if (!searchLocationDTO.locationName && searchLocationDTO.category) {
-      return await this.locationModel
-        .find({
-          category: {
-            $regex: searchLocationDTO.category,
-            $options: 'i',
-          },
-        })
-        .sort({ category: 1 })
-        .exec();
-    } else if (searchLocationDTO.locationName && !searchLocationDTO.category) {
-      return await this.locationModel
-        .find({
-          $or: [
-            {
-              locationName: {
-                $regex: searchLocationDTO.locationName,
-                $options: 'i',
-              },
-            },
-            {
-              room: {
-                $regex: searchLocationDTO.locationName,
-                $options: 'i',
-              },
-            },
-          ],
-        })
-        .sort({ category: 1 })
-        .exec();
-    } else {
-      return await this.locationModel.find().sort({ category: 1 }).exec();
-    }
+    return await this.queryLocationFromDatabase(searchLocationDTO);
   }
 
   async addLocation(locationDetails: CreateLocationDTO) {
@@ -227,5 +169,118 @@ export class LocationService {
       },
     );
     return locationOneNameDTO;
+  }
+
+  async queryLocationFromDatabase(
+    searchLocationDTO: SearchLocationDTO,
+  ): Promise<Location[]> {
+    if (searchLocationDTO.locationName && searchLocationDTO.category) {
+      return await this.locationModel
+        .find({
+          $and: [
+            ...(searchLocationDTO.locationName
+              ? [
+                  {
+                    $or: [
+                      {
+                        locationName: {
+                          $regex: searchLocationDTO.locationName,
+                          $options: 'i',
+                        },
+                      },
+                      {
+                        room: {
+                          $regex: searchLocationDTO.locationName,
+                          $options: 'i',
+                        },
+                      },
+                    ],
+                  },
+                ]
+              : []),
+            {
+              category: {
+                $regex: searchLocationDTO.category,
+                $options: 'i',
+              },
+            },
+          ],
+        })
+        .sort({ category: 1 })
+        .exec();
+    } else if (!searchLocationDTO.locationName && searchLocationDTO.category) {
+      return await this.locationModel
+        .find({
+          category: {
+            $regex: searchLocationDTO.category,
+            $options: 'i',
+          },
+        })
+        .sort({ category: 1 })
+        .exec();
+    } else if (searchLocationDTO.locationName && !searchLocationDTO.category) {
+      return await this.locationModel
+        .find({
+          $or: [
+            {
+              locationName: {
+                $regex: searchLocationDTO.locationName,
+                $options: 'i',
+              },
+            },
+            {
+              room: {
+                $regex: searchLocationDTO.locationName,
+                $options: 'i',
+              },
+            },
+          ],
+        })
+        .sort({ category: 1 })
+        .exec();
+    } else {
+      return await this.locationModel.find().sort({ category: 1 }).exec();
+    }
+  }
+
+  async queryLocationsFromGoogle(
+    searchLocationDTO: SearchLocationDTO,
+    // dbLocations: Location[],
+  ) {
+    // Use Google Maps Places API to query locations
+    let response;
+    if (searchLocationDTO.locationName) {
+      response = await this.client.textSearch({
+        params: {
+          query: searchLocationDTO.locationName,
+          key: process.env.GOOGLE_MAPS_API,
+        },
+      });
+    } else {
+      response = await this.client.placesNearby({
+        params: {
+          location: '18.802581402286663,98.9515193318211',
+          radius: 10000,
+          key: process.env.GOOGLE_MAPS_API,
+        },
+      });
+    }
+
+    // Process the response from Google Maps Places API
+    const googleLocations: Location[] = response.data.results.map(
+      (location: Partial<PlaceData>) => this.convertGoogleToLocation(location),
+    );
+
+    return googleLocations;
+    // return response.data.results;
+  }
+
+  private convertGoogleToLocation(response: Place): Location {
+    const location: Location = {
+      locationName: [response.name],
+      latitude: response.geometry.location.lat.toString(),
+      longitude: response.geometry.location.lng.toString(),
+    };
+    return location;
   }
 }

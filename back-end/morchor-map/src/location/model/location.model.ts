@@ -1,3 +1,4 @@
+import { PlacePhoto } from '@googlemaps/google-maps-services-js';
 import * as mongoose from 'mongoose';
 
 export const LocationSchema = new mongoose.Schema({
@@ -10,7 +11,7 @@ export const LocationSchema = new mongoose.Schema({
     require: true,
   },
   img: {
-    type: String,
+    type: [String],
   },
   latitude: {
     type: String,
@@ -26,11 +27,11 @@ export const LocationSchema = new mongoose.Schema({
 });
 
 export interface Location {
-  id: string;
+  id?: string;
   locationName: string[];
-  category: string;
-  img: string;
+  category?: string;
+  img?: string;
   latitude: string;
   longitude: string;
-  room: string[];
+  room?: string[];
 }
