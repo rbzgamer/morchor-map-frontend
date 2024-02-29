@@ -37,7 +37,7 @@ export const Room = ({
     // console.log(selectBuilding);
 
     fetch(
-      "http://localhost:5000/api/locations/rooms/" + selectBuilding,
+      "https://morchor-map-backend-production.up.railway.app/api/locations/rooms/" + selectBuilding,
       requestOptions
     )
       .then((response) => response.json())

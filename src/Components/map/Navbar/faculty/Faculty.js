@@ -21,7 +21,7 @@ export const Faculty = ({ setChoose, setSelectFaculty, open }) => {
       redirect: "follow",
     };
 
-    fetch("http://localhost:5000/api/locations/categories", requestOptions)
+    fetch("https://morchor-map-backend-production.up.railway.app/api/locations/categories", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setChecked(false);

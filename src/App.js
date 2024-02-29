@@ -19,7 +19,6 @@ import {
   APIProvider,
   Map,
   AdvancedMarker,
-  useMap,
 } from "@vis.gl/react-google-maps";
 
 export default function App() {
@@ -79,10 +78,6 @@ export default function App() {
       latitude = parseFloat(latitudeFromUser);
       longitude = parseFloat(longitudeFromUser);
     }
-
-    // const position = { lat: latitude, lng: longitude };
-
-    // console.log(position);
 
     return (
       <>

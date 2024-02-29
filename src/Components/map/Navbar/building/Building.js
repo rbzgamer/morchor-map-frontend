@@ -43,7 +43,7 @@ export const Building = ({
     };
 
     fetch(
-      "http://localhost:5000/api/locations/?category=" + selectFaculty,
+      "https://morchor-map-backend-production.up.railway.app/api/locations/?category=" + selectFaculty,
       requestOptions
     )
       .then((response) => response.json())

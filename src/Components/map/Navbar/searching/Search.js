@@ -37,7 +37,7 @@ export const Search = ({
     };
 
     fetch(
-      "http://localhost:5000/api/locations/?locationName=" + searchData,
+      "https://morchor-map-backend-production.up.railway.app/api/locations/?locationName=" + searchData,
       requestOptions
     )
       .then((response) => response.json())
