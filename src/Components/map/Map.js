@@ -25,7 +25,7 @@ export const MapCon = ({
       redirect: "follow",
     };
 
-    fetch("https://morchor-map-backend-production.up.railway.app/api/locations/one-name", requestOptions)
+    fetch(process.env.REACT_APP_BACK_END_URL + "locations/one-name", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setChecked(false);

@@ -21,7 +21,10 @@ export const Faculty = ({ setChoose, setSelectFaculty, open }) => {
       redirect: "follow",
     };
 
-    fetch("https://morchor-map-backend-production.up.railway.app/api/locations/categories", requestOptions)
+    fetch(
+      process.env.REACT_APP_BACK_END_URL + "locations/categories",
+      requestOptions
+    )
       .then((response) => response.json())
       .then((result) => {
         setChecked(false);
@@ -105,7 +108,7 @@ export const Faculty = ({ setChoose, setSelectFaculty, open }) => {
       });
       return <div>{listOrders}</div>;
     } else {
-      return <LinearProgress/>;
+      return <LinearProgress />;
     }
   };
 
