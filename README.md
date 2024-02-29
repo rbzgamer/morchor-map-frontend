@@ -2,7 +2,7 @@
 
 This is part of the subjects 261491 Project Survey and 261492 Project.
 
-# Installation
+## Installation
 
 1. Clone the repo
    ```sh
@@ -16,6 +16,10 @@ This is part of the subjects 261491 Project Survey and 261492 Project.
    ```sh
    npm run start
    ```
+## Setup
+1. Delete .example from .env.example file
+2. Insert your google api key in place of YOUR_API_KEY in the .env file.
+3. Insert your back end url in place of BACK_END_URL in the .env file. For example: http:localhost:5000/api
 
 ## Available Scripts
 ### `npm run start`
