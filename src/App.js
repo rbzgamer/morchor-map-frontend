@@ -15,11 +15,7 @@ import { Directions } from "./Components/map/Directions";
 import { DirectionBar } from "./Components/map/Navbar/DirectionBar";
 import { ShowDirectionInfo } from "./Components/map/Navbar/ShowDirectionInfo";
 
-import {
-  APIProvider,
-  Map,
-  AdvancedMarker,
-} from "@vis.gl/react-google-maps";
+import { APIProvider, Map, AdvancedMarker } from "@vis.gl/react-google-maps";
 
 export default function App() {
   const [results, setResults] = useState([]);
@@ -90,6 +86,7 @@ export default function App() {
                 zoom={18}
                 mapId="d024e2b838dd693a"
               >
+                {/*User location */}
                 <AdvancedMarker
                   position={{ lat: latitudeFromUser, lng: longitudeFromUser }}
                   onClick={() => {
@@ -100,12 +97,13 @@ export default function App() {
                   }}
                 >
                   <img
-                    src="https://cdn-icons-png.flaticon.com/512/800/800724.png"
+                    src="https://cdn-icons-png.flaticon.com/512/3603/3603850.png"
                     width={50}
                     height={50}
                   />
                 </AdvancedMarker>
 
+                {/*Marker location */}
                 {!useRoute && (
                   <MapCon
                     latitude={latitude}
@@ -119,6 +117,7 @@ export default function App() {
                   />
                 )}
 
+                {/*Direction location */}
                 <Directions
                   firstLocation={{ lat: originLat, lng: originLng }}
                   secondLocation={{
@@ -133,6 +132,7 @@ export default function App() {
                   setDuration={setDuration}
                 />
 
+                {/*Origin location */}
                 {useRoute && (
                   <AdvancedMarker
                     position={{
@@ -145,6 +145,7 @@ export default function App() {
                   />
                 )}
 
+                {/*Destination location */}
                 {useRoute && (
                   <AdvancedMarker
                     position={{
