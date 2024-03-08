@@ -132,34 +132,7 @@ export default function App() {
                   setDuration={setDuration}
                 />
 
-                {/*Origin location */}
-                {useRoute && (
-                  <AdvancedMarker
-                    position={{
-                      lat: parseFloat(originLat),
-                      lng: parseFloat(originLng),
-                    }}
-                    onClick={() => {
-                      Swal.fire({ title: "Origin Location", icon: "info" });
-                    }}
-                  />
-                )}
 
-                {/*Destination location */}
-                {useRoute && (
-                  <AdvancedMarker
-                    position={{
-                      lat: parseFloat(destinationLat),
-                      lng: parseFloat(destinationLng),
-                    }}
-                    onClick={() => {
-                      Swal.fire({
-                        title: "Destination Location",
-                        icon: "info",
-                      });
-                    }}
-                  />
-                )}
               </Map>
             </APIProvider>
           </div>
