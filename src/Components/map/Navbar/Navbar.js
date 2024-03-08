@@ -88,6 +88,7 @@ export const Navbar = ({
   return (
     <>
       <Paper
+        component='form'
         sx={{
           p: "2px 4px",
           display: "flex",
@@ -122,9 +123,6 @@ export const Navbar = ({
           value={searchText}
           onChange={(event) => {
             setSearchText(event.target.value);
-          }}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") handleSubmit();
           }}
         />
         <IconButton
