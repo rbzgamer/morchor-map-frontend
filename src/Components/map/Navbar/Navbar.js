@@ -1,15 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DeleteIcon from "@mui/icons-material/Delete";
 import "./Navbar.css";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 
 import {
-  AppBar,
-  Box,
   Divider,
   IconButton,
   Paper,
-  Toolbar,
   Typography,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";

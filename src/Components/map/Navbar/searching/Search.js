@@ -23,12 +23,16 @@ export const Search = ({
   setDestinationLat,
   setDestinationLng,
   setOpenDirectionBar,
-  open
+  open,
+  map,
+  setIsSearch,
+  setNameSearch,
 }) => {
   const [check, setChecked] = useState(true);
   const [search, setSearch] = useState([]);
   const [lat, setLat] = useState("");
   const [lon, setLon] = useState("");
+  const [name, setName] = useState("");
 
   const loadSearch = async () => {
     var requestOptions = {
@@ -37,7 +41,9 @@ export const Search = ({
     };
 
     fetch(
-      process.env.REACT_APP_BACK_END_URL + "locations/?locationName=" + searchData,
+      process.env.REACT_APP_BACK_END_URL +
+        "locations/?locationName=" +
+        searchData,
       requestOptions
     )
       .then((response) => response.json())
@@ -54,14 +60,19 @@ export const Search = ({
   }, [searchData]);
 
   const handleSubmit = async () => {
+    console.log(lat + " " + lon);
     setLatitudeFromLocation(lat);
     setLongitudeFromLocation(lon);
     setSubmit(true);
+    setIsSearch(true);
+    setNameSearch(name);
+    map.panTo({ lat: parseFloat(lat), lng: parseFloat(lon) });
   };
 
-  const handleMouseMove = async (lat, lon) => {
+  const handleMouseMove = async (lat, lon, locationName) => {
     setLat(lat);
     setLon(lon);
+    setName(locationName[0]);
   };
 
   const handleAddToOriginLocation = (locationName) => {
@@ -96,7 +107,11 @@ export const Search = ({
                 },
               }}
               onMouseMove={() =>
-                handleMouseMove(object.latitude, object.longitude)
+                handleMouseMove(
+                  object.latitude,
+                  object.longitude,
+                  object.locationName
+                )
               }
             >
               <AspectRatio ratio="1" sx={{ width: 50 }}>
@@ -154,7 +169,7 @@ export const Search = ({
       });
       return <div>{listOrders}</div>;
     } else {
-      return <LinearProgress/>;
+      return <LinearProgress />;
     }
   };
   return <>{open && showSearch()}</>;

@@ -1,5 +1,4 @@
 import "./styles.css";
-import "leaflet/dist/leaflet.css";
 import "./App.css";
 
 import Swal from "sweetalert2";
@@ -31,6 +30,8 @@ export default function App() {
   const [submit, setSubmit] = useState(false);
   const [open, setOpen] = useState(true);
   const [openDirectionBar, setOpenDirectionBar] = useState(false);
+  const [isSearch, setIsSearch] = useState(false);
+  const [nameSearch, setNameSearch] = useState(false);
 
   const [originName, setOriginName] = useState("User Location");
   const [originLat, setOriginLat] = useState();
@@ -64,7 +65,7 @@ export default function App() {
     if (
       latitudeFromLocation !== undefined &&
       latitudeFromLocation !== "" &&
-      latitudeFromLocation !== NaN &&
+      latitudeFromLocation.isNaN() &&
       latitudeFromLocation !== latitudeFromUser
     ) {
       latitude = parseFloat(latitudeFromLocation);
@@ -114,6 +115,8 @@ export default function App() {
                     setUseRoute={setUseRoute}
                     setDestinationLat={setDestinationLat}
                     setDestinationLng={setDestinationLng}
+                    isSearch={isSearch}
+                    nameSearch={nameSearch}
                   />
                 )}
 
@@ -131,8 +134,6 @@ export default function App() {
                   setDistance={setDistance}
                   setDuration={setDuration}
                 />
-
-
               </Map>
             </APIProvider>
           </div>
@@ -196,6 +197,9 @@ export default function App() {
                   setDestinationLng={setDestinationLng}
                   setOpenDirectionBar={setOpenDirectionBar}
                   open={open}
+                  map={map}
+                  setIsSearch={setIsSearch}
+                  setNameSearch={setNameSearch}
                 />
               )}
               {/* Category Result */}

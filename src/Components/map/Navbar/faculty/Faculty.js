@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
-import Building from "../building/Building";
-import Room from "../room/Room";
 import "./Faculty.css";
 
-import SendIcon from "@mui/icons-material/Send";
 import AspectRatio from "@mui/joy/AspectRatio";
 import Card from "@mui/joy/Card";
 import CardContent from "@mui/joy/CardContent";

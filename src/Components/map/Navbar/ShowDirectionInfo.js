@@ -1,5 +1,4 @@
-import { Box, IconButton, TextField } from "@mui/material";
-import SendIcon from "@mui/icons-material/Send";
+import { Box, TextField } from "@mui/material";
 
 export const ShowDirectionInfo = ({
   distance,

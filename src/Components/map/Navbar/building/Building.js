@@ -11,7 +11,6 @@ import AddLocationIcon from "@mui/icons-material/AddLocation";
 import AssistantDirectionIcon from "@mui/icons-material/AssistantDirection";
 import NavigationIcon from "@mui/icons-material/Navigation";
 import { LinearProgress } from "@mui/material";
-import { useMap } from "@vis.gl/react-google-maps";
 
 export const Building = ({
   setChoose,
