@@ -65,7 +65,7 @@ export default function App() {
     if (
       latitudeFromLocation !== undefined &&
       latitudeFromLocation !== "" &&
-      latitudeFromLocation.isNaN() &&
+      !isNaN(latitudeFromLocation) &&
       latitudeFromLocation !== latitudeFromUser
     ) {
       latitude = parseFloat(latitudeFromLocation);
