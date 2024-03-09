@@ -252,5 +252,9 @@ export default function App() {
         </div>
       </>
     );
+  } else {
+    return (
+      <h1 className="noGPS">Please enable GPS</h1>
+    );
   }
 }

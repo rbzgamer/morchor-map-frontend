@@ -26,3 +26,11 @@
     max-height: 80vh;
   }
 }
+
+.noGPS {
+  font-size: 50px;
+  text-align: center;
+  color: red;
+  text-decoration-line: underline;
+  font-family: "Courier New", Courier, monospace;
+}
