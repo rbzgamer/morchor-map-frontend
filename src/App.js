@@ -22,9 +22,9 @@ export default function App() {
   const [choose, setChoose] = useState("Faculty");
   const [selectFaculty, setSelectFaculty] = useState("");
   const [selectBuilding, setSelectBuilding] = useState("");
-  {
-    /* default 30 years building engineer */
-  }
+
+  /* default 30 years building engineer */
+
   const [latitudeFromUser, setLatitudeFromUser] = useState(18.7956431);
   const [longitudeFromUser, setLongitudeFromUser] = useState(98.9527902);
   const [fetched, setFetched] = useState(false);
@@ -347,6 +347,7 @@ export default function App() {
 
   return (
     <div className="application">
+      {fetched && showNavbar()}
       {/* Base Map */}
       <div style={{ height: "100vh", width: "100%" }}>
         <APIProvider apiKey={process.env.REACT_APP_GOOGLE_MAP_API_KEY}>
@@ -356,7 +357,6 @@ export default function App() {
             mapId="d024e2b838dd693a"
           >
             {fetched && showMapInformation()}
-            {fetched && showNavbar()}
           </Map>
         </APIProvider>
       </div>
