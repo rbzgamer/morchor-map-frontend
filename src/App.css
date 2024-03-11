@@ -21,16 +21,46 @@
   overflow-y: scroll;
 }
 
+.button-route-driving {
+  font-size: 15px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 250px;
+  padding: 10px;
+
+  border-bottom: 0px;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 1px solid black;
+
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.button-route-walking {
+  font-size: 15px;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  width: 250px;
+  padding: 10px;
+  border: 0px;
+
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.button-route-driving:hover {
+  background-color: #3ba6ff; 
+  color: white;
+}
+
+.button-route-walking:hover {
+  background-color: #3ba6ff; 
+  color: white;
+}
+
 @media screen and (max-width: 450px) {
   .result-list {
     max-height: 80vh;
   }
-}
-
-.noGPS {
-  font-size: 50px;
-  text-align: center;
-  color: red;
-  text-decoration-line: underline;
-  font-family: "Courier New", Courier, monospace;
 }

@@ -48,6 +48,7 @@ export default function App() {
 
   const [distance, setDistance] = useState("0 km");
   const [duration, setDuration] = useState("0 min");
+  const [typeRoute, setTypeRoute] = useState("DRIVING");
 
   async function showPosition(po) {
     setLatitudeFromUser(po.coords.latitude);
@@ -67,6 +68,10 @@ export default function App() {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(showPosition, error);
   }, []);
+
+  useEffect(() => {
+    showDirectionAndDuration()
+  },[distance])
 
   const showMapInformation = () => {
     let latitude = 0.0;
@@ -155,6 +160,7 @@ export default function App() {
         setMap={setMap}
         setDistance={setDistance}
         setDuration={setDuration}
+        typeRoute={typeRoute}
       />
     );
   };
@@ -207,6 +213,7 @@ export default function App() {
       <>
         {showOriginAndDestination()}
         {showDirectionAndDuration()}
+        {showTypeRoute()}
       </>
     );
   };
@@ -237,6 +244,64 @@ export default function App() {
         {openDirectionBar && (
           <ShowDirectionInfo distance={distance} duration={duration} />
         )}
+      </>
+    );
+  };
+
+  const showTypeRoute = () => {
+    let driving = "#107ed9";
+    let walking = "#107ed9";
+
+    if (typeRoute === "DRIVING") {
+      driving = "#3ba6ff";
+      walking = "#107ed9";
+    } else if (typeRoute === "WALKING") {
+      driving = "#107ed9";
+      walking = "#3ba6ff";
+    }
+
+    return (
+      <>
+        <>
+          {openDirectionBar && (
+            <div style={{ display: "flex", backgroundColor: "white",}}>
+              <button
+                className="button-route-driving"
+                style={{ backgroundColor: driving }}
+                onClick={() => setTypeRoute("DRIVING")}
+              >
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/9549/9549470.png"
+                  width="20"
+                  height="20"
+                />
+
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/43/43694.png"
+                  width="20"
+                  height="20"
+                />
+
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/26/26969.png"
+                  width="20"
+                  height="20"
+                />
+              </button>
+              <button
+                className="button-route-walking"
+                style={{ backgroundColor: walking }}
+                onClick={() => setTypeRoute("WALKING")}
+              >
+                <img
+                  src="https://cdn-icons-png.flaticon.com/512/76/76859.png"
+                  width="20"
+                  height="20"
+                />
+              </button>
+            </div>
+          )}
+        </>
       </>
     );
   };

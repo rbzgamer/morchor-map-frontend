@@ -10,6 +10,7 @@ export const Directions = ({
   setMap,
   setDistance,
   setDuration,
+  typeRoute,
 }) => {
   const map = useMap();
   const routeLibrary = useMapsLibrary("routes");
@@ -63,7 +64,7 @@ export const Directions = ({
             lat: parseFloat(secondLocation.lat),
             lng: parseFloat(secondLocation.lng),
           },
-          travelMode: "DRIVING",
+          travelMode: typeRoute,
         })
         .then((response) => {
           directionRenderer.setDirections(response);
@@ -72,17 +73,6 @@ export const Directions = ({
             lat: parseFloat(secondLocation.lat),
             lng: parseFloat(secondLocation.lng),
           });
-
-          if (
-            route.length !== 0 &&
-            route[0] !== undefined &&
-            route[0].legs !== undefined
-          ) {
-            setDistance(route[0].legs[0].distance.text);
-            setDuration(route[0].legs[0].duration.text);
-            console.log(route[0].legs[0].distance);
-            console.log(route[0].legs[0].duration);
-          }
         });
     } else {
       directionRenderer.setMap(null);
@@ -93,7 +83,20 @@ export const Directions = ({
         lng: parseFloat(firstLocation.lng),
       });
     }
-  }, [directionService, directionRenderer, useRoute, stateClickRoute]);
+  }, [directionService, directionRenderer, useRoute, stateClickRoute, typeRoute]);
+
+  useEffect(() => {
+    if (
+      route.length !== 0 &&
+      route[0] !== undefined &&
+      route[0].legs !== undefined
+    ) {
+      setDistance(route[0].legs[0].distance.text);
+      setDuration(route[0].legs[0].duration.text);
+      console.log(route[0].legs[0].distance);
+      console.log(route[0].legs[0].duration);
+    }
+  }, [route]);
 
   return null;
 };
